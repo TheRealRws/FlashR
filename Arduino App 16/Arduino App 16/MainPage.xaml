@@ -2,13 +2,21 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
             x:Class="Arduino_App_16.MainPage"
-            BackgroundColor="Black"
-            BarBackgroundColor="DarkGreen"
-            SelectedTabColor="White"
-            UnselectedTabColor="Gray">
+            BackgroundColor="white"
+            BarBackgroundColor="Teal"
+            SelectedTabColor="black"
+            UnselectedTabColor="DarkGray">
 
-    <arduino_app_16:SettingsPage/>
-    <arduino_app_16:CommunicationPage/>
+    <stackLayout>
+        <Grid>
+            <Rectangle Height="20px" Width="100%" BackgroundColor="Teal"></Rectangle>
+            <Button Height="100 px" Width="100px" BackgroundColor="DarkGray">"Sent Message"</Button>
+            <Button Height="100 px" Width="100px" BackgroundColor="DarkGray">"Check Temperature"</Button>
+            <Button Height="100 px" Width="100px" BackgroundColor="DarkGray">"Settings"</Button>
+            <Button Height="100 px" Width="100px" BackgroundColor="DarkGray">"Morse Code"</Button>
+            <Rectangle Height="20px" Width="100%" BackgroundColor="Teal"></Rectangle>
+        </Grid>
+    </stackLayout>
 
 </TabbedPage>
 
