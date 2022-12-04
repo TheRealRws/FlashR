@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Arduino_App_16.SettingsPage"
+             Title="Settings">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="IP address"
+                   TextColor="LawnGreen" />
+            <Entry Text="192.168.1.177"
+                   x:Name="EntryIP"
+                   TextColor="LawnGreen"
+                   Keyboard="Numeric"
+                   Placeholder="Insert IP address here"
+                   PlaceholderColor="DarkGreen"/>
+            <Label Text="Port"
+                   TextColor="LawnGreen" />
+            <Entry Text="1337"
+                   x:Name="EntryPort"
+                   TextColor="LawnGreen"
+                   Keyboard="Numeric"
+                   Placeholder="Insert Port here"
+                   PlaceholderColor="DarkGreen"/>
+            <Label Text="Not Connected"
+                   x:Name="LabelConnected"
+                   TextColor="Red" />
+            <Button Text="Test Connection"
+                    Clicked="Test_Connection_Clicked"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

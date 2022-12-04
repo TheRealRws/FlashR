@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Arduino_App_16.CommunicationPage"
+             Title="Communication">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="input1" Placeholder="Put in message here."></Entry>
+            <Button Text="Send Message"
+                    x:Name="ButtonLEDToggle"
+                    BackgroundColor="Gray"
+                    Clicked="Toggle_LED_Clicked"></Button>
+            <Label x:Name="recieved" ></Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

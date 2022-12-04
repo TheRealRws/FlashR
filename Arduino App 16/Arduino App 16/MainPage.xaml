@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
+            x:Class="Arduino_App_16.MainPage"
+            BackgroundColor="Black"
+            BarBackgroundColor="DarkGreen"
+            SelectedTabColor="White"
+            UnselectedTabColor="Gray">
+
+    <arduino_app_16:SettingsPage/>
+    <arduino_app_16:CommunicationPage/>
+
+</TabbedPage>
+
