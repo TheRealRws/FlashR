@@ -7,7 +7,7 @@
         <StackLayout>
             <Label Text="IP address"
                    TextColor="LawnGreen" />
-            <Entry Text="192.168.1.177"
+            <Entry Text="192.168.2.177"
                    x:Name="EntryIP"
                    TextColor="LawnGreen"
                    Keyboard="Numeric"
@@ -15,7 +15,7 @@
                    PlaceholderColor="DarkGreen"/>
             <Label Text="Port"
                    TextColor="LawnGreen" />
-            <Entry Text="1337"
+            <Entry Text="20080"
                    x:Name="EntryPort"
                    TextColor="LawnGreen"
                    Keyboard="Numeric"

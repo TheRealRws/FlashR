@@ -5,12 +5,14 @@
              Title="Communication">
     <ContentPage.Content>
         <StackLayout>
-            <Entry x:Name="input1" Placeholder="Put in message here."></Entry>
+            <Entry x:Name="InputText" Placeholder="Put in message here."></Entry>
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
                     BackgroundColor="Gray"
                     Clicked="Toggle_LED_Clicked"></Button>
             <Label x:Name="recieved" ></Label>
+            <Label x:Name="tempC" ></Label>
+            <Label x:Name="humid" ></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

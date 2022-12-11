@@ -1,3 +1,6 @@
+#include <DHT.h>
+#include <DHT_U.h>
+#include <Adafruit_Sensor.h>
 
 #include <splash.h>
 
@@ -7,6 +10,10 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#define DHTPIN 1     // what pin we're connected to
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+DHT dht(DHTPIN, DHTTYPE);
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 
@@ -14,7 +21,7 @@
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-
+int port = 20080;
 
 #include <Ethernet.h>
 
@@ -24,16 +31,19 @@ byte mac[] = {
   0xA8, 0x61, 0x0A, 0xAE, 0x95, 0x5F };
 IPAddress ip(192, 168, 2, 177);
 
-// Running on Port 20080, select your port!
-EthernetServer server(20080);
+// Running on Port int port, select your port!
+EthernetServer server(port);
 
 bool alreadyConnected = false;
 // buffer for incoming commands
 String command = "";
 
+float hum;  //Stores humidity value
+float temp; //Stores temperature value
 void setup() {
 
 
+  dht.begin();
   // set pin 7 to output
   pinMode(7, OUTPUT);
 
@@ -62,6 +72,18 @@ void setup() {
     Serial.println("Ethernet cable is not connected.");
   }
 
+  
+  display.clearDisplay();
+
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 0);
+
+  display.print(Ethernet.localIP());
+
+  display.setCursor(0,10);
+  display.print("Port: "+ String(port));
+  display.display();
   // start listening for clients
   server.begin();
 
@@ -81,9 +103,19 @@ void loop() {
       client.flush();
       Serial.println("App connected");
       alreadyConnected = true;
-    }
 
+      display.clearDisplay();
+
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(0, 10);
+
+      display.print("Connected!");
+
+    }
+  
     if (client.available() > 0) {
+      
       // read the bytes incoming from the client:
       char thisChar = client.read();
       command = String(command + thisChar);
@@ -107,6 +139,15 @@ void loop() {
         client.println(respons);
         command = "";
       }
+      if(thisChar == '&')
+      {
+        
+        Serial.println("");
+        String respons = reply(command);
+        Serial.println("Responding: " + respons);
+        client.println(respons);
+        command = "";
+      }
     }
   }
 }
@@ -114,26 +155,47 @@ void loop() {
 String reply(String cmd)
 {
   Serial.println("Received command: " + cmd);
+
   if (cmd == "<ECHO>")
   {
     Serial.println("Echo command recognized");
     return "<ECHO>";
   }
+
+  
+    
+  if (cmd == "Humd&")
+  {
+    Serial.println("Reading Humidity");  
+    return String(hum);
+  }
+
+  
+  if (cmd == "Temp&")
+  {
+    // Serial.println("Reading Temperature"); 
+    // temp = dht.readTemperature();
+    // // hum = dht.readHumidity();
+    // return String("Temp: "+String(temp) + "C Humd: "+String(hum) +"%");
+    return String(analogRead(A1));
+  }
+
+
+  
   if (cmd[cmd.length()-1] == '$')
   {
-  cmd.remove(cmd.length()-1);
-  Serial.println("<OK>");
-  Serial.println(cmd);
+    cmd.remove(cmd.length()-1);
+    Serial.println("<OK>");
+    Serial.println(cmd);
 
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(0, 10);
+    // Display static text
 
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0, 10);
-  // Display static text
-
-
-  display.print(cmd);
-  return "<OK>";
+    display.print(cmd);
+    display.display();
+    return "<OK>";
   }
 
 }

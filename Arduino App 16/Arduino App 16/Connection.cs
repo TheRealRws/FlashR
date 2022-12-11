@@ -14,7 +14,8 @@ namespace Arduino_App_16
         private static Socket client;
         private static IPEndPoint remoteEP;
         private static IPAddress ipAddress;
-
+        public static int temp;
+        public static float humd;
         public static bool IsConnected()
         {
             return connected;
@@ -25,6 +26,7 @@ namespace Arduino_App_16
         /// </summary>
         /// <param name="command">The command to be sent</param>
         /// <returns>true if <OK> is received</returns>
+        /// 
         private static bool SendCommand(string command)
         {
             if (connected)
@@ -48,6 +50,21 @@ namespace Arduino_App_16
                     client.Shutdown(SocketShutdown.Both);
                     client.Close();
 
+                    if (Int32.Parse(receivedMessage) >0)
+                    {
+                        temp = Int32.Parse( receivedMessage);
+
+                        return true;
+                    }
+
+                    if (command == "&Humi&")
+                    {
+                        humd = float.Parse(receivedMessage);
+
+
+                        return true;
+                    }
+
                     //evaluating respons
                     if (receivedMessage == "<OK>")
                     {
@@ -69,12 +86,25 @@ namespace Arduino_App_16
                 return false;
         }
 
+        public static int ReadTemp()
+        {
+            SendCommand("Temp&");
+            return temp;
 
+
+
+        }
+        public static float ReadHumd()
+        {
+            SendCommand("Humi&");
+            return humd;
+        }
 
         public static bool SendMessage(string x)
         {
             return SendCommand(x);
         }
+
 
 
         public static string TestConnection(string ip, int port)
