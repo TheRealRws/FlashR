@@ -14,7 +14,7 @@ namespace Arduino_App_16
         private static Socket client;
         private static IPEndPoint remoteEP;
         private static IPAddress ipAddress;
-        public static int temp;
+        public static string temp;
         public static float humd;
         public static bool IsConnected()
         {
@@ -50,9 +50,9 @@ namespace Arduino_App_16
                     client.Shutdown(SocketShutdown.Both);
                     client.Close();
 
-                    if (Int32.Parse(receivedMessage) >0)
+                    if (receivedMessage[receivedMessage.Length-1] == '%' )
                     {
-                        temp = Int32.Parse( receivedMessage);
+                        temp =  receivedMessage;
 
                         return true;
                     }
@@ -86,7 +86,7 @@ namespace Arduino_App_16
                 return false;
         }
 
-        public static int ReadTemp()
+        public static string ReadTemp()
         {
             SendCommand("Temp&");
             return temp;

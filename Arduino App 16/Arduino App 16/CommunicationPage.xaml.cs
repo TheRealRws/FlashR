@@ -21,7 +21,7 @@ namespace Arduino_App_16
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
                 // Do something
-                tempC.Text = Connection.ReadTemp().ToString();
+                tempC.Text = Connection.ReadTemp();
                 return true; // True = Repeat again, False = Stop the timer
             });
 

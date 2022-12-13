@@ -10,7 +10,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define DHTPIN 1     // what pin we're connected to
+#define DHTPIN  2    // what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -37,13 +37,20 @@ EthernetServer server(port);
 bool alreadyConnected = false;
 // buffer for incoming commands
 String command = "";
-
+bool delayRunning = false;
+int delayStart;
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
 void setup() {
 
 
   dht.begin();
+  
+  
+  temp = dht.readTemperature();
+  hum = dht.readHumidity();
+  delayRunning = true;
+  delayStart = millis();
   // set pin 7 to output
   pinMode(7, OUTPUT);
 
@@ -94,6 +101,16 @@ void setup() {
 void loop() {
   // wait for a new client:
   EthernetClient client = server.available();
+
+  if (delayRunning && ((millis() - delayStart) >= 5000)) {
+      
+      temp = dht.readTemperature();
+      hum = dht.readHumidity();
+      delayStart = millis();
+  }
+
+
+
 
   display.display(); 
   // when the client sends the first byte, say hello:
@@ -163,21 +180,13 @@ String reply(String cmd)
   }
 
   
-    
-  if (cmd == "Humd&")
-  {
-    Serial.println("Reading Humidity");  
-    return String(hum);
-  }
+  
 
   
   if (cmd == "Temp&")
   {
-    // Serial.println("Reading Temperature"); 
-    // temp = dht.readTemperature();
-    // // hum = dht.readHumidity();
-    // return String("Temp: "+String(temp) + "C Humd: "+String(hum) +"%");
-    return String(analogRead(A1));
+    Serial.println("Reading Temperature"); 
+    return String("Temp: "+String(temp) + "C Humd: "+String(hum) +"%");
   }
 
 
