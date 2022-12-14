@@ -61,7 +61,7 @@ void setup() {
   // Open serial communications for debugging
   Serial.begin(9600);
 
-  
+  //This only applies to your display. If there is no display connected, feel free to comment out the following lines:
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
       Serial.println(F("SSD1306 allocation failed"));
       for(;;); // Don't proceed, loop forever

@@ -171,4 +171,4 @@ namespace Arduino_App_16
     }
 }
 
-//Nutteloze zin puur om pushing te testen (Jurre)
+//Useless sentence to test pushing and interaction on GitHub(Jurre)
