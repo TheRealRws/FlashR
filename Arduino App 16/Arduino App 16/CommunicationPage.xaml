@@ -5,6 +5,10 @@
              Title="Communication">
     <ContentPage.Content>
         <StackLayout>
+
+            <Label Text="Recieved message:" ></Label>
+
+            <Label x:Name="RecMes" ></Label>
             <Entry x:Name="InputText" Placeholder="Put in message here."></Entry>
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
@@ -12,7 +16,21 @@
                     Clicked="Toggle_LED_Clicked"></Button>
             <Label x:Name="recieved" ></Label>
             <Label x:Name="tempC" ></Label>
-            <Label x:Name="humid" ></Label>
+            <Label Text="Preprogrammed messages:" ></Label>
+
+            <Label x:Name="Info1" ></Label>
+            <Entry x:Name="Mes1" Placeholder="Put the first message here."></Entry>
+
+            <Label x:Name="Info2" ></Label>
+            <Entry x:Name="Mes2" Placeholder="Put the second message here."></Entry>
+
+            <Label x:Name="Info3" ></Label>
+            <Entry x:Name="Mes3" Placeholder="Put the third message here."></Entry>
+
+            <Button Text="Change Messages"
+                    x:Name="UpdateMes"
+                    BackgroundColor="Gray"
+                    Clicked="UpdateMessages"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
