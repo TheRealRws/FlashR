@@ -15,7 +15,7 @@ namespace Arduino_App_16
         private static IPEndPoint remoteEP;
         private static IPAddress ipAddress;
         public static string temp;
-        public static float humd;
+        public static string mes;
         public static bool IsConnected()
         {
             return connected;
@@ -50,17 +50,18 @@ namespace Arduino_App_16
                     client.Shutdown(SocketShutdown.Both);
                     client.Close();
 
-                    if (receivedMessage[receivedMessage.Length-1] == '%' )
+                    //this pulls the specified message and removes the #
+                    if (receivedMessage[receivedMessage.Length - 1] == '#')
                     {
-                        temp =  receivedMessage;
+                        mes = receivedMessage.Remove(receivedMessage.Length - 1);
 
                         return true;
                     }
 
-                    if (command == "&Humi&")
+                    //This pulls the temp
+                    if (receivedMessage[receivedMessage.Length-1] == '%' )
                     {
-                        humd = float.Parse(receivedMessage);
-
+                        temp =  receivedMessage;
 
                         return true;
                     }
@@ -86,27 +87,28 @@ namespace Arduino_App_16
                 return false;
         }
 
+        //This sends the temprature command and returns the temp/hum as text.
         public static string ReadTemp()
         {
             SendCommand("Temp&");
             return temp;
-
-
-
         }
-        public static float ReadHumd()
+
+        //This sends the mes + indentifier command and returns the message.
+        public static string GrabMes(int i)
         {
-            SendCommand("Humi&");
-            return humd;
+            SendCommand("Mes"+i+"#");
+            return mes;
         }
 
+        //This sends the message command and returns nothing.
         public static bool SendMessage(string x)
         {
             return SendCommand(x);
         }
 
 
-
+        //This tests the connection and awaits an echo command.
         public static string TestConnection(string ip, int port)
         {
             connected = false;
@@ -170,5 +172,3 @@ namespace Arduino_App_16
         }
     }
 }
-
-//Useless sentence to test pushing and interaction on GitHub(Jurre)

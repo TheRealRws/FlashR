@@ -55,6 +55,17 @@ bool delayRunning = false; //This can stop/start the Timer.
 int delayStart; //Stores the start time of the Timer.
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
+
+String mes1 = "ok";
+String mes2 = "no";
+String mes3 = "give me 5 minutes";
+String mes4 = " ";
+
+
+
+
+
+
 void setup() {
 
   //Initializes the temp sensor
@@ -70,6 +81,11 @@ void setup() {
   
   // set pin 7 to output
   pinMode(7, OUTPUT);
+
+  //Pins for the buttons.
+  pinMode(8, OUTPUT); //mes1
+  pinMode(9, OUTPUT); //mes2
+  pinMode(10, OUTPUT); //mes3
 
   // initialize the Ethernet device
   Ethernet.init(10);
@@ -130,7 +146,19 @@ void loop() {
       delayStart = millis();
   }
 
-
+  //This sets the recieving message to the preset message matching the button.
+  if(digitalRead(8))
+  {
+    mes4 = mes1;
+  }
+  if(digitalRead(9))
+  {
+    mes4 = mes2;
+  }
+  if(digitalRead(10))
+  {
+    mes4 = mes3;
+  }
 
   //This makes it so the display displays.
   display.display(); 
@@ -177,6 +205,17 @@ void loop() {
         client.println(respons);
         command = "";
       }
+
+      if (thisChar == '$')
+      {
+        Serial.println("");
+        String respons = reply(command);
+        Serial.println("Responding: " + respons);
+        client.println(respons);
+        command = "";
+      }
+
+
 
       //This is for the Message command
       if(thisChar == '$')
@@ -226,6 +265,37 @@ String reply(String cmd)
     return String("Temp: "+String(temp) + "C Humd: "+String(hum) +"%");
   }
 
+  //This is both for updating the preset messages on the phone and for sending messages to the phone.
+  //Mes4 is for the sending to the phone.
+  //Mes1-3 is so the phone can grab the current set messages upon connection.
+  if (cmd[cmd.length()-1] == '$')
+  {
+    if (cmd[cmd.length()-2] == '1')
+    {
+      return String( mes1 +"#");
+      Serial.println("Send message: "+mes1); 
+    }
+    
+    if (cmd[cmd.length()-2] == '2')
+    {
+      return String( mes2 +"#");
+      Serial.println("Send message: "+mes1); 
+    }
+    
+    if (cmd[cmd.length()-2] == '3')
+    {
+      return String( mes3 +"#");
+      Serial.println("Send message: "+mes1); 
+    }
+    
+    if (cmd[cmd.length()-2] == '4')
+    {
+      return String( mes4 +"#");
+      Serial.println("Send message: "+mes1); 
+    }
+  }
+
+
   //This is the text command. In this case the arduino recieves text and dislays it on the screen.
   //After that it sends back an <ok>  to signify its been recieved.
   if (cmd[cmd.length()-1] == '$')
@@ -244,5 +314,8 @@ String reply(String cmd)
     display.display();
     return "<OK>";
   }
+
+
+  if()
 
 }
