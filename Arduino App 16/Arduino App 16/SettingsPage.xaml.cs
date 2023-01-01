@@ -29,7 +29,7 @@ namespace Arduino_App_16
             {
                 string reply = Connection.TestConnection(ip, port);
                 LabelConnected.Text = reply;
-                if (reply == "Connection established, ECHO received")
+                if (reply == "Connection established, ECHO received!")
                 {
                     LabelConnected.TextColor = Color.Green;
                 }

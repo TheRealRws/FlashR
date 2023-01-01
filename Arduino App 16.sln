@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arduino App 16.Android", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arduino App 16.iOS", "Arduino App 16\Arduino App 16.iOS\Arduino App 16.iOS.csproj", "{D6AFD3E3-0651-49A7-9505-EB3A7ACD65F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arduino App 16", "Arduino App 16\Arduino App 16\Arduino App 16.csproj", "{F41274D9-97CB-49DF-8468-67FC6F8A24AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arduino App 16", "Arduino App 16\Arduino App 16\Arduino App 16.csproj", "{F41274D9-97CB-49DF-8468-67FC6F8A24AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
