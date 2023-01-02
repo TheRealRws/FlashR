@@ -62,7 +62,7 @@ String mes2 = "no";
 String mes3 = "give me 5 minutes";
 
 
-String mes4 = " "; //This is the output message of the arduino. This gets grabbed by the app to display.
+String mes4 = "x"; //This is the output message of the arduino. This gets grabbed by the app to display.
 
 
 
@@ -86,9 +86,10 @@ void setup() {
   pinMode(7, OUTPUT);
 
   //Pins for the buttons.
-  pinMode(8, OUTPUT); //mes1
-  pinMode(9, OUTPUT); //mes2
-  pinMode(10, OUTPUT); //mes3
+  pinMode(8, INPUT); //mes1
+  pinMode(9, INPUT); //mes2
+  pinMode(10, INPUT); //mes3
+  pinMode(11, INPUT); //Button
 
   // initialize the Ethernet device
   Ethernet.init(10);
@@ -149,19 +150,22 @@ void loop() {
       delayStart = millis();
   }
 
-  //This sets the recieving message to the preset message matching the button.
-  if(digitalRead(8))
-  {
-    mes4 = mes1;
-  }
-  if(digitalRead(9))
-  {
-    mes4 = mes2;
-  }
-  if(digitalRead(10))
-  {
-    mes4 = mes3;
-  }
+ // This sets the recieving message to the preset message matching the button.
+  // if(!digitalRead(8))
+  // {
+  //     Serial.println("changed to 1");
+  //   mes4 = mes1;
+  // }
+  // if(!digitalRead(9))
+  // {
+  //     Serial.println("changed to 2");
+  //   mes4 = mes2;
+  // }
+  // if(!digitalRead(10))
+  // {
+  //     Serial.println("changed to 3");
+  //   mes4 = mes3;
+  // }
 
   //This makes it so the display displays.
   display.display(); 
@@ -273,25 +277,25 @@ String reply(String cmd)
   {
     if (cmd[cmd.length()-2] == '1')
     {
-      return String( mes1 +"#");
+      return String( mes1 +'#');
       Serial.println("Send message: "+mes1); 
     }
     
     if (cmd[cmd.length()-2] == '2')
     {
-      return String( mes2 +"#");
+      return String( mes2 +'#');
       Serial.println("Send message: "+mes1); 
     }
     
     if (cmd[cmd.length()-2] == '3')
     {
-      return String( mes3 +"#");
+      return String( mes3 +'#');
       Serial.println("Send message: "+mes1); 
     }
     
     if (cmd[cmd.length()-2] == '4')
     {
-      return String( mes4 +"#");
+      return String( mes4 +'#');
       Serial.println("Send message: "+mes1); 
     }
   }

@@ -13,15 +13,14 @@ namespace Arduino_App_16
     public partial class CommunicationPage : ContentPage
     {
 
-
+        int x = 1;
         public CommunicationPage()
         {
 
             InitializeComponent();
             //This pulls the preset messages.
-            Mes1.Text = Connection.GrabMes(1);
-            Mes1.Text = Connection.GrabMes(2);
-            Mes1.Text = Connection.GrabMes(3);
+
+
 
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
@@ -31,13 +30,44 @@ namespace Arduino_App_16
             });
 
 
-            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(31), () =>
             {
                 //this pulls the recieving message every 5 seconds
                 RecMes.Text = Connection.GrabMes(4);
                 return true; // True = Repeat again, False = Stop the timer
             });
 
+
+
+            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            {
+                //this pulls the pulls the temp and humidity
+
+                if (x == 1)
+                {
+                    Mes1.Text = Connection.GrabMes(x);
+
+                    x++;
+                    return true;
+                }
+                if (x == 2)
+                {
+
+                    Mes2.Text = Connection.GrabMes(x);
+
+                    x++;
+                    return true;
+                }
+                if (x == 3)
+                {
+
+                    Mes3.Text = Connection.GrabMes(x);
+
+                    return false;
+                }
+
+                return true;
+            });
 
         }
 
