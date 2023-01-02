@@ -56,10 +56,13 @@ int delayStart; //Stores the start time of the Timer.
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
 
+//These are the preset messages.
 String mes1 = "ok";
 String mes2 = "no";
 String mes3 = "give me 5 minutes";
-String mes4 = " ";
+
+
+String mes4 = " "; //This is the output message of the arduino. This gets grabbed by the app to display.
 
 
 
@@ -215,10 +218,8 @@ void loop() {
         command = "";
       }
 
-
-
       //This is for the Message command
-      if(thisChar == '$')
+      if(thisChar == '#')
       {
         
         display.clearDisplay();
@@ -268,7 +269,7 @@ String reply(String cmd)
   //This is both for updating the preset messages on the phone and for sending messages to the phone.
   //Mes4 is for the sending to the phone.
   //Mes1-3 is so the phone can grab the current set messages upon connection.
-  if (cmd[cmd.length()-1] == '$')
+  if (cmd[cmd.length()-1] == '#')
   {
     if (cmd[cmd.length()-2] == '1')
     {
@@ -315,7 +316,5 @@ String reply(String cmd)
     return "<OK>";
   }
 
-
-  if()
 
 }
