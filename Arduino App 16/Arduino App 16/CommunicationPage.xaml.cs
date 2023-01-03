@@ -12,7 +12,7 @@ namespace Arduino_App_16
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CommunicationPage : ContentPage
     {
-
+        bool y = true;
         int x = 1;
         public CommunicationPage()
         {
@@ -20,7 +20,7 @@ namespace Arduino_App_16
             InitializeComponent();
             //This pulls the preset messages.
 
-
+            
 
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
@@ -39,7 +39,7 @@ namespace Arduino_App_16
 
 
 
-            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(11), () =>
             {
                 //this pulls the pulls the temp and humidity
 
@@ -48,7 +48,7 @@ namespace Arduino_App_16
                     Mes1.Text = Connection.GrabMes(x);
 
                     x++;
-                    return true;
+                    return y;
                 }
                 if (x == 2)
                 {
@@ -56,17 +56,17 @@ namespace Arduino_App_16
                     Mes2.Text = Connection.GrabMes(x);
 
                     x++;
-                    return true;
+                    return y;
                 }
                 if (x == 3)
                 {
 
                     Mes3.Text = Connection.GrabMes(x);
-
-                    return false;
+                    y = false;
+                    return y;
                 }
-
-                return true;
+                x = 1;
+                return y;
             });
 
         }
@@ -89,32 +89,28 @@ namespace Arduino_App_16
         private void UpdateMessages(object sender, EventArgs e)
         {
 
-            if (Connection.SendMessage(Mes1.Text + "1#"))
+            if (Connection.SendMessage(Mes1.Text + "1*"))
             {
                 Info1.Text = "Changed";
-                if (Connection.SendMessage(Mes2.Text + "2#"))
+                if (Connection.SendMessage(Mes2.Text + "2*"))
                 {
                     Info2.Text = "Changed";
-                    if (Connection.SendMessage(Mes3.Text + "3#"))
+                    if (Connection.SendMessage(Mes3.Text + "3*"))
                     {
                         Info3.Text = "Changed";
-
                     }
                     else
                     {
-
                         Info3.Text = "Failed";
                     }
                 }
                 else
                 {
-
                     Info2.Text = "Failed";
                 }
             }
             else
             {
-
                 Info1.Text = "Failed";
             }
         }

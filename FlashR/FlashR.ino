@@ -1,3 +1,5 @@
+#include <LiquidCrystal_I2C.h>
+
 #include <DHT.h>
 #include <DHT_U.h>
 #include <Adafruit_Sensor.h>
@@ -7,8 +9,7 @@
 
 #include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+
 
 #define DHTPIN  2    // what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
@@ -16,12 +17,18 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 
+// Wiring: SDA pin is connected to A4 and SCL pin to A5.
+// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered)
+LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4) for 20x4 LCD.
+
+
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+// #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 //If you want to use the display you can use these commands:
 //
@@ -51,7 +58,6 @@ EthernetServer server(port);
 
 bool alreadyConnected = false;
 String command = ""; // buffer for incoming commands
-bool delayRunning = false; //This can stop/start the Timer.
 int delayStart; //Stores the start time of the Timer.
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
@@ -60,7 +66,7 @@ float temp; //Stores temperature value
 String mes1 = "ok";
 String mes2 = "no";
 String mes3 = "give me 5 minutes";
-
+String respons = "";
 
 String mes4 = "x"; //This is the output message of the arduino. This gets grabbed by the app to display.
 
@@ -71,6 +77,7 @@ String mes4 = "x"; //This is the output message of the arduino. This gets grabbe
 
 void setup() {
 
+
   //Initializes the temp sensor
   dht.begin();
   
@@ -78,7 +85,6 @@ void setup() {
   temp = dht.readTemperature();
   hum = dht.readHumidity();
   //Initializes timer.
-  delayRunning = true;
   delayStart = millis();
 
   
@@ -99,10 +105,14 @@ void setup() {
   Serial.begin(9600);
 
   //This only applies to your display. If there is no display connected, feel free to comment out the following lines:
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
-      Serial.println(F("SSD1306 allocation failed"));
-      for(;;); // Don't proceed, loop forever
-    }
+  // if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+  //     Serial.println(F("SSD1306 allocation failed"));
+  //     for(;;); // Don't proceed, loop forever
+  //   }
+
+  
+  lcd.init();
+  lcd.backlight();
 
 
   // Check for Ethernet hardware present
@@ -117,18 +127,21 @@ void setup() {
   }
 
   //Initializes display.
-  display.clearDisplay();
+  //display.clearDisplay();
 
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0, 0);
+  //display.setTextSize(1);
+  //display.setTextColor(WHITE);
+  //display.setCursor(0, 0);
   //Displays IP on line 1
-  display.print(Ethernet.localIP());
+  //display.print(Ethernet.localIP());
   //Displays port on line 2
-  display.setCursor(0,10);
-  display.print("Port: "+ String(port));
-  display.display();
-
+  // display.setCursor(0,10);
+  // display.print("Port: "+ String(port));
+  // display.display();
+  lcd.setCursor(2, 0); // Set the cursor on the third column and first row.
+  lcd.print(Ethernet.localIP()); // Print the IP
+  lcd.setCursor(2, 1); //Set the cursor on the third column and the second row (counting starts at 0!).
+  lcd.print(port);//Print the port
   
   // start listening for clients
   server.begin();
@@ -143,7 +156,7 @@ void loop() {
 
   //this pulls the data from the temp/hum sensor every 5 seconds (5000mili)
   //If you want anything based on a timer copy this and adjust what you need.
-  if (delayRunning && ((millis() - delayStart) >= 5000)) {
+  if (((millis() - delayStart) >= 5000)) {
       
       temp = dht.readTemperature();
       hum = dht.readHumidity();
@@ -167,8 +180,6 @@ void loop() {
   //   mes4 = mes3;
   // }
 
-  //This makes it so the display displays.
-  display.display(); 
   // when the client sends the first byte, say hello:
   if (client) {
     if (!alreadyConnected) {
@@ -177,13 +188,13 @@ void loop() {
       Serial.println("App connected");
       alreadyConnected = true;
 
-      display.clearDisplay();
+      //display.clearDisplay();
 
-      display.setTextSize(1);
-      display.setTextColor(WHITE);
-      display.setCursor(0, 10);
+     // display.setTextSize(1);
+     // display.setTextColor(WHITE);
+     // display.setCursor(0, 10);
 
-      display.print("Connected!");
+     // display.print("Connected!");
 
     }
   
@@ -207,30 +218,32 @@ void loop() {
       if (thisChar == '>')
       {
         Serial.println("");
-        String respons = reply(command);
+        respons = reply(command);
         Serial.println("Responding: " + respons);
         client.println(respons);
+        respons = "";
         command = "";
       }
 
       if (thisChar == '$')
       {
         Serial.println("");
-        String respons = reply(command);
+        respons = reply(command);
         Serial.println("Responding: " + respons);
         client.println(respons);
+        respons = "";
         command = "";
       }
 
       //This is for the Message command
       if(thisChar == '#')
       {
-        
-        display.clearDisplay();
+        //display.clearDisplay();
         Serial.println("");
-        String respons = reply(command);
+        respons = reply(command);
         Serial.println("Responding: " + respons);
         client.println(respons);
+        respons = "";
         command = "";
       }
 
@@ -239,9 +252,10 @@ void loop() {
       {
         
         Serial.println("");
-        String respons = reply(command);
+        respons = reply(command);
         Serial.println("Responding: " + respons);
         client.println(respons);
+        respons = "";
         command = "";
       }
     }
@@ -273,30 +287,62 @@ String reply(String cmd)
   //This is both for updating the preset messages on the phone and for sending messages to the phone.
   //Mes4 is for the sending to the phone.
   //Mes1-3 is so the phone can grab the current set messages upon connection.
-  if (cmd[cmd.length()-1] == '#')
+  if (cmd[cmd.length()-1] == '#' || cmd[cmd.length()-1] == '*')
   {
-    if (cmd[cmd.length()-2] == '1')
-    {
-      return String( mes1 +'#');
-      Serial.println("Send message: "+mes1); 
-    }
+    String Temp="";
     
-    if (cmd[cmd.length()-2] == '2')
+    if (cmd[cmd.length()-1] == '#')
     {
-      return String( mes2 +'#');
-      Serial.println("Send message: "+mes1); 
+      if(cmd[cmd.length()-2] == '1')
+      {
+        Temp = mes1;
+      }
+      if(cmd[cmd.length()-2] == '2')
+      {
+        Temp = mes2;
+      }
+      if(cmd[cmd.length()-2] == '3')
+      {
+        Temp = mes3;
+      }
+      Serial.println("Send message: "+Temp); 
+      return String( Temp +'#');
     }
-    
-    if (cmd[cmd.length()-2] == '3')
-    {
-      return String( mes3 +'#');
-      Serial.println("Send message: "+mes1); 
-    }
-    
+
+    if (cmd[cmd.length()-1] == '*')
+        {
+          if (cmd[cmd.length()-2] == '1')
+          {
+              
+            cmd.remove(cmd.length()-1);
+            cmd.remove(cmd.length()-2);
+            Serial.println("Changing Mes1 to "+cmd);
+            mes1 = cmd;
+            return "<OK>";
+          }
+          
+          if (cmd[cmd.length()-2] == '2')
+          {    
+            cmd.remove(cmd.length()-1);
+            cmd.remove(cmd.length()-2);
+            Serial.println("Changing Mes2 to "+cmd); 
+            mes2 = cmd;
+            return "<OK>";
+          }
+          
+          if (cmd[cmd.length()-2] == '3')
+          {    
+            cmd.remove(cmd.length()-1);
+            cmd.remove(cmd.length()-2);
+            Serial.println("Changing Mes3 to "+cmd); 
+            mes3 = cmd;
+            return "<OK>";
+          }
+        }
     if (cmd[cmd.length()-2] == '4')
     {
+      Serial.println("Send message: "+mes4); 
       return String( mes4 +'#');
-      Serial.println("Send message: "+mes1); 
     }
   }
 
@@ -307,16 +353,14 @@ String reply(String cmd)
   {
     cmd.remove(cmd.length()-1);
     Serial.println("<OK>");
-    Serial.println(cmd);
 
-
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.setCursor(0, 10);
+   // display.setTextSize(1);
+    //display.setTextColor(WHITE);
+    //display.setCursor(0, 10);
     // Display static text
 
-    display.print(cmd);
-    display.display();
+    //display.print(cmd);
+    //display.display();
     return "<OK>";
   }
 

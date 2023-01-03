@@ -32,7 +32,7 @@ namespace Arduino_App_16
                 if (reply == "Connection established, ECHO received!")
                 {
                     LabelConnected.TextColor = Color.Green;
-
+                   
                 }
                 else
                 {
