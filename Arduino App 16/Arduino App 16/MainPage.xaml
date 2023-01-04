@@ -1,14 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
             x:Class="Arduino_App_16.MainPage"
-            BackgroundColor="Black"
-            BarBackgroundColor="DarkGreen"
+            BackgroundColor="white">
+    <!--BarBackgroundColor="DarkGreen"
             SelectedTabColor="White"
-            UnselectedTabColor="Gray">
+            UnselectedTabColor="Gray"> -->
 
-    <arduino_app_16:SettingsPage/>
+    <StackLayout>
+        <!-- Header -->
+            <!-- Placement for the Logo and description -->
+        <Label Text="FlashR" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="36"
+               FontAttributes="Bold"
+               Margin="0,0,0,0"
+               Padding="0,40,20,40"
+               HorizontalTextAlignment ="end"></Label>
+        
+        <!-- Body -->
+        
+            <!-- Made a grid for the buttons to place them in a square alltogether -->
+                    <Grid Padding="10,20,10,0">
+              <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                 <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+             <Grid.RowDefinitions>
+                 <RowDefinition Height="220"/>
+                 <RowDefinition Height="220"/>
+              </Grid.RowDefinitions>
+                        <!-- Buttons for Navigation -->
+                
+            <Button Text="Sent Message"
+                    CornerRadius="20"
+                    BorderWidth="2"
+                    BorderColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Clicked="NavigateTo_Communication"
+                    ></Button>
+
+            <Button Text="Check Temperature"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Grid.Column="1"
+                    Grid.Row="0"></Button>
+            
+            <Button Text="Settings"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Clicked="NavigateTo_Settings"></Button>
+            
+            <Button Text="Morse Code"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Grid.Column="1"
+                    Grid.Row="1"></Button>
+        </Grid>
+        
+        <!-- Footer -->
+        
+        <Label
+            BackgroundColor="Teal"
+            Padding="60"
+            Margin="0,20,0,0"></Label>
+
+        
+    </StackLayout>
+   <!-- <arduino_app_16:SettingsPage/>
     <arduino_app_16:CommunicationPage/>
+    -->
 
-</TabbedPage>
+</ContentPage>
 
