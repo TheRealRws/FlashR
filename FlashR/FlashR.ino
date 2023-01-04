@@ -22,26 +22,6 @@ DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4) for 20x4 LCD.
 
 
-
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 32 // OLED display height, in pixels
-
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-// #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-//If you want to use the display you can use these commands:
-//
-//
-//  display.clearDisplay(); This clears the display.
-//  display.setTextSize(1); This sets the text size. Text can be quite big so have fun.
-//  display.setTextColor(WHITE); Our display has no colour settings so this doesnt matter much past initialization.
-//  display.setCursor(a, b); This sets the position of the cursor. a is for right to left and b is for up and down. Use numbers ofc.
-//  display.print("text"); This will put text on the spot you set the cursor.
-//  display.display(); This will make it display the text.
-
-
-
 //Input your desired port here.
 int port = 20080;
 
@@ -102,11 +82,6 @@ void setup() {
   // Open serial communications for debugging
   Serial.begin(9600);
 
-  //This only applies to your display. If there is no display connected, feel free to comment out the following lines:
-  // if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
-  //     Serial.println(F("SSD1306 allocation failed"));
-  //     for(;;); // Don't proceed, loop forever
-  //   }
 
   
   lcd.init();
@@ -174,14 +149,7 @@ void loop() {
       Serial.println("App connected");
       alreadyConnected = true;
 
-      //display.clearDisplay();
-
-     // display.setTextSize(1);
-     // display.setTextColor(WHITE);
-     // display.setCursor(0, 10);
-
-     // display.print("Connected!");
-
+     
     }
   
     if (client.available() > 0) {
@@ -190,14 +158,6 @@ void loop() {
       char thisChar = client.read();
       command = String(command + thisChar);
 
-      //This goes through every byte send. It will go through each character seperatly
-      
-      
-      // echo received the bytes to the serial port
-
-      //If you want to add commands add their identifier in here.
-      //If it will display something add display.clearDisplay();
-      //You can copy the rest.
 
       //This is for the <ECHO> command.
       Serial.write(thisChar);
@@ -272,7 +232,6 @@ String reply(String cmd)
 
   //This is both for updating the preset messages on the phone and for sending messages to the phone.
   //Mes4 is for the sending to the phone.
-  //Mes1-3 is so the phone can grab the current set messages upon connection.
   if (cmd[cmd.length()-1] == '#' || cmd[cmd.length()-1] == '*')
   {
     String Temp="";
@@ -315,13 +274,8 @@ String reply(String cmd)
     cmd.remove(cmd.length()-1);
     Serial.println("<OK>");
 
-   // display.setTextSize(1);
-    //display.setTextColor(WHITE);
-    //display.setCursor(0, 10);
-    // Display static text
+    //!!!!!!!!!!!!!!!!!Display the cmd here on display.!!!!!!!!!!!!!!!!!!!!!
 
-    //display.print(cmd);
-    //display.display();
     return "<OK>";
   }
 
