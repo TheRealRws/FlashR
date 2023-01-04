@@ -63,9 +63,7 @@ float hum;  //Stores humidity value
 float temp; //Stores temperature value
 
 //These are the preset messages.
-String mes1 = "ok";
-String mes2 = "no";
-String mes3 = "give me 5 minutes";
+String Messages[3]={"ok","no","give me 5 minutes"};
 String respons = "";
 
 String mes4 = "x"; //This is the output message of the arduino. This gets grabbed by the app to display.
@@ -126,18 +124,6 @@ void setup() {
     Serial.println("Ethernet cable is not connected.");
   }
 
-  //Initializes display.
-  //display.clearDisplay();
-
-  //display.setTextSize(1);
-  //display.setTextColor(WHITE);
-  //display.setCursor(0, 0);
-  //Displays IP on line 1
-  //display.print(Ethernet.localIP());
-  //Displays port on line 2
-  // display.setCursor(0,10);
-  // display.print("Port: "+ String(port));
-  // display.display();
   lcd.setCursor(2, 0); // Set the cursor on the third column and first row.
   lcd.print(Ethernet.localIP()); // Print the IP
   lcd.setCursor(2, 1); //Set the cursor on the third column and the second row (counting starts at 0!).
@@ -293,52 +279,27 @@ String reply(String cmd)
     
     if (cmd[cmd.length()-1] == '#')
     {
-      if(cmd[cmd.length()-2] == '1')
-      {
-        Temp = mes1;
-      }
-      if(cmd[cmd.length()-2] == '2')
-      {
-        Temp = mes2;
-      }
-      if(cmd[cmd.length()-2] == '3')
-      {
-        Temp = mes3;
-      }
+      Temp = Messages[cmd[cmd.length()-2]-'0'];
       Serial.println("Send message: "+Temp); 
       return String( Temp +'#');
     }
 
-    if (cmd[cmd.length()-1] == '*')
-        {
-          if (cmd[cmd.length()-2] == '1')
-          {
-              
-            cmd.remove(cmd.length()-1);
-            cmd.remove(cmd.length()-2);
-            Serial.println("Changing Mes1 to "+cmd);
-            mes1 = cmd;
-            return "<OK>";
-          }
-          
-          if (cmd[cmd.length()-2] == '2')
-          {    
-            cmd.remove(cmd.length()-1);
-            cmd.remove(cmd.length()-2);
-            Serial.println("Changing Mes2 to "+cmd); 
-            mes2 = cmd;
-            return "<OK>";
-          }
-          
-          if (cmd[cmd.length()-2] == '3')
-          {    
-            cmd.remove(cmd.length()-1);
-            cmd.remove(cmd.length()-2);
-            Serial.println("Changing Mes3 to "+cmd); 
-            mes3 = cmd;
-            return "<OK>";
-          }
-        }
+    if (cmd[cmd.length()-1] == '*' && cmd[cmd.length()-2] != '4')
+    {
+
+
+      int x = cmd[cmd.length()-2]-'0';
+      
+      Serial.println("Changing Mes" +String(x)+" to "+cmd);
+      cmd.remove(cmd.length()-1);
+      cmd.remove(cmd.length()-2);
+
+      
+      Messages[x] = cmd;
+      return "<OK>";
+      
+    }
+
     if (cmd[cmd.length()-2] == '4')
     {
       Serial.println("Send message: "+mes4); 
