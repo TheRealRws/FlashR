@@ -4,33 +4,91 @@
              x:Class="Arduino_App_16.CommunicationPage"
              Title="Communication">
     <ContentPage.Content>
+        
         <StackLayout>
+            <!-- Header -->
+            
+            <Label Text="Sent Message" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="30"
+               FontAttributes="Bold"
+               Padding="0,20,20,20"
+               HorizontalTextAlignment ="end"></Label>
+            
+            <!-- Body -->
 
-            <Label Text="Recieved message:" ></Label>
+            <Label Text="Recieved message:" 
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20,0,0,0"></Label>
 
             <Label x:Name="RecMes" ></Label>
-            <Entry x:Name="InputText" Placeholder="Put in message here."></Entry>
+            
+            <Entry x:Name="InputText" 
+                   Placeholder="Put in message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,-10,20,0"></Entry>
+            
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
-                    BackgroundColor="Gray"
-                    Clicked="Toggle_LED_Clicked"></Button>
+                    BackgroundColor="LightGray"
+                    Clicked="Toggle_LED_Clicked"
+                    Margin="20,5,20,0"
+                    CornerRadius="10"
+                    BorderWidth="2"
+                    BorderColor="Gray"></Button>
+            
             <Label x:Name="recieved" ></Label>
+            <!-- temperatuur-->
             <Label x:Name="tempC" ></Label>
-            <Label Text="Preprogrammed messages:" ></Label>
+            
+            <Label Text="Preprogrammed messages:" 
+                   FontSize="20"
+                   TextColor="black"
+                   Padding="20,0,0,0"></Label>
 
             <Label x:Name="Info1" ></Label>
-            <Entry x:Name="Mes1" Placeholder="Put the first message here."></Entry>
+            <Entry x:Name="Mes1" 
+                   Placeholder="Put the first message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,-10,20,0"></Entry>
 
             <Label x:Name="Info2" ></Label>
-            <Entry x:Name="Mes2" Placeholder="Put the second message here."></Entry>
+            <Entry x:Name="Mes2" 
+                   Placeholder="Put the second message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"></Entry>
 
             <Label x:Name="Info3" ></Label>
-            <Entry x:Name="Mes3" Placeholder="Put the third message here."></Entry>
+            <Entry x:Name="Mes3" 
+                   Placeholder="Put the third message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"></Entry>
 
             <Button Text="Change Messages"
                     x:Name="UpdateMes"
-                    BackgroundColor="Gray"
-                    Clicked="UpdateMessages"></Button>
+                    Clicked="UpdateMessages"
+                    BackgroundColor="LightGray"
+                    Margin="20,5,20,5"
+                    CornerRadius="10"
+                    BorderWidth="2"
+                    BorderColor="Gray"></Button>
+            
+            <!-- Footer -->
+            
+            <Label
+            BackgroundColor="Teal"
+            Padding="40"></Label>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -4,28 +4,67 @@
              x:Class="Arduino_App_16.SettingsPage"
              Title="Settings">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout VerticalOptions="CenterAndExpand" HeightRequest="800">
+            
+            <!-- Header -->
+            
+            <Label Text="Settings" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="30"
+               FontAttributes="Bold"
+               Padding="0,20,20,20"
+               HorizontalTextAlignment ="end"></Label>
+            
+            <!-- Body -->
+            
             <Label Text="IP address"
-                   TextColor="LawnGreen" />
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20"/>
+            
             <Entry Text="192.168.2.177"
                    x:Name="EntryIP"
-                   TextColor="LawnGreen"
+                   TextColor="Black"
+                   BackgroundColor="LightGray"
                    Keyboard="Numeric"
                    Placeholder="Insert IP address here"
-                   PlaceholderColor="DarkGreen"/>
+                   PlaceholderColor="gray"
+                   Margin="20,0,20,0"/>
+            
             <Label Text="Port"
-                   TextColor="LawnGreen" />
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20"/>
+            
             <Entry Text="20080"
                    x:Name="EntryPort"
-                   TextColor="LawnGreen"
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
                    Keyboard="Numeric"
                    Placeholder="Insert Port here"
-                   PlaceholderColor="DarkGreen"/>
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"/>
+            
             <Label Text="Not Connected"
+                   FontSize="16"
+                   FontAttributes="Bold"
                    x:Name="LabelConnected"
-                   TextColor="Red" />
+                   TextColor="Red"
+                   Padding="20,20,20,0"/>
+            
             <Button Text="Test Connection"
-                    Clicked="Test_Connection_Clicked"/>
+                    Clicked="Test_Connection_Clicked"
+                    Padding="40"
+                    Margin="20,0,20,20"
+                    CornerRadius="10"
+                    BorderColor="gray"
+                    BorderWidth="2"/>
+            <!-- Footer -->
+            
+            <Label
+            BackgroundColor="Teal"
+            Padding="90"></Label>
 
         </StackLayout>
     </ContentPage.Content>

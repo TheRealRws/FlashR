@@ -3,42 +3,52 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
             x:Class="Arduino_App_16.MainPage"
             BackgroundColor="white">
-    <!--BarBackgroundColor="DarkGreen"
-            SelectedTabColor="White"
-            UnselectedTabColor="Gray"> -->
 
-    <StackLayout>
+    <StackLayout VerticalOptions="CenterAndExpand" Spacing="50">
         <!-- Header -->
-            <!-- Placement for the Logo and description -->
+        <!-- Placement for the Logo and description -->
         <Label Text="FlashR" 
                BackgroundColor="Teal"
                TextColor="White"
-               FontSize="36"
+               FontSize="30"
                FontAttributes="Bold"
-               Margin="0,0,0,0"
-               Padding="0,40,20,40"
+               Padding="0,20,20,20"
                HorizontalTextAlignment ="end"></Label>
-        
+
+        <!--Logo app
+        <Image Source="ic_launcher_round"/>
+        -->
+
+
+        <!-- description of the app, welcome message -->
+        <Label Text="Description of how to use the app"
+               HorizontalTextAlignment="Center"
+               TextColor="DarkGray"></Label>
+
         <!-- Body -->
-        
-            <!-- Made a grid for the buttons to place them in a square alltogether -->
-                    <Grid Padding="10,20,10,0">
-              <Grid.ColumnDefinitions>
-                  <ColumnDefinition/>
-                 <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-             <Grid.RowDefinitions>
-                 <RowDefinition Height="220"/>
-                 <RowDefinition Height="220"/>
-              </Grid.RowDefinitions>
-                        <!-- Buttons for Navigation -->
-                
+
+        <!-- Made a grid for the buttons to place them in a square alltogether -->
+        <Grid Padding="20,0,20,0"
+                          RowSpacing="30"
+                          ColumnSpacing="30"
+                          HorizontalOptions="CenterAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="170"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="170"/>
+            </Grid.RowDefinitions>
+            <!-- Buttons for Navigation -->
+
             <Button Text="Sent Message"
-                    CornerRadius="20"
+                    CornerRadius="10"
                     BorderWidth="2"
-                    BorderColor="Black"
+                    BorderColor="DarkGray"
                     FontAttributes="Bold"
-                    FontSize="16"
+                    FontSize="14"
+                    Padding="10"
                     Grid.Column="0"
                     Grid.Row="0"
                     Clicked="NavigateTo_Communication"
@@ -46,36 +56,42 @@
 
             <Button Text="Check Temperature"
                     FontAttributes="Bold"
-                    FontSize="16"
+                    Padding="10"
+                    FontSize="14"
                     Grid.Column="1"
-                    Grid.Row="0"></Button>
-            
+                    Grid.Row="0"
+                    CornerRadius="10"
+                    BorderWidth="2"
+                    BorderColor="DarkGray"></Button>
+
             <Button Text="Settings"
                     FontAttributes="Bold"
-                    FontSize="16"
+                    FontSize="14"
                     Grid.Column="0"
                     Grid.Row="1"
-                    Clicked="NavigateTo_Settings"></Button>
-            
+                    Clicked="NavigateTo_Settings"
+                    CornerRadius="10"
+                    BorderWidth="2"
+                    BorderColor="DarkGray"></Button>
+
             <Button Text="Morse Code"
                     FontAttributes="Bold"
-                    FontSize="16"
+                    FontSize="14"
                     Grid.Column="1"
-                    Grid.Row="1"></Button>
+                    Grid.Row="1"
+                    CornerRadius="10"
+                    BorderWidth="2"
+                    BorderColor="DarkGray"></Button>
         </Grid>
-        
+
         <!-- Footer -->
-        
+
         <Label
             BackgroundColor="Teal"
-            Padding="60"
-            Margin="0,20,0,0"></Label>
+            Padding="40"></Label>
 
-        
+
     </StackLayout>
-   <!-- <arduino_app_16:SettingsPage/>
-    <arduino_app_16:CommunicationPage/>
-    -->
 
 </ContentPage>
 
