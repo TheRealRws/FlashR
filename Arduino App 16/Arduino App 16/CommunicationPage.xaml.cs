@@ -89,13 +89,13 @@ namespace Arduino_App_16
         private void UpdateMessages(object sender, EventArgs e)
         {
 
-            if (Connection.SendMessage(Mes1.Text + "1#"))
+            if (Connection.SendMessage(Mes1.Text + "1*"))
             {
                 Info1.Text = "Changed";
-                if (Connection.SendMessage(Mes2.Text + "2#"))
+                if (Connection.SendMessage(Mes2.Text + "2*"))
                 {
                     Info2.Text = "Changed";
-                    if (Connection.SendMessage(Mes3.Text + "3#"))
+                    if (Connection.SendMessage(Mes3.Text + "3*"))
                     {
                         Info3.Text = "Changed";
 

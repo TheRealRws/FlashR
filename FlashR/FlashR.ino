@@ -36,17 +36,17 @@ IPAddress ip(192, 168, 2, 177);
 // Running on Port int port.
 EthernetServer server(port);
 
-bool alreadyConnected = false;
+bool alreadyConnected = false; //sets the default condition of the connection
 String command = ""; // buffer for incoming commands
 int delayStart; //Stores the start time of the Timer.
+int delayStart2;
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
 
 //These are the preset messages.
-String Messages[3]={"ok","no","give me 5 minutes"};
+String Messages[4]={"ok","no","give me 5 minutes", "Something"};
 String respons = "";
 
-String mes4 = "x"; //This is the output message of the arduino. This gets grabbed by the app to display.
 
 
 
@@ -62,9 +62,9 @@ void setup() {
   //Pulls data from temp sensor.
   temp = dht.readTemperature();
   hum = dht.readHumidity();
-  //Initializes timer.
+  //Initializes timers.
   delayStart = millis();
-
+  delayStart2 = millis();
   
   // set pin 7 to output
   pinMode(7, OUTPUT);
@@ -83,26 +83,43 @@ void setup() {
   Serial.begin(9600);
 
 
-  
+
   lcd.init();
   lcd.backlight();
 
 
   // Check for Ethernet hardware present
-  if (Ethernet.hardwareStatus() == EthernetNoHardware) {
+  if (Ethernet.hardwareStatus() == EthernetNoHardware) 
+  {
     Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware. :(");
-    while (true) {
+    lcd.print ("Ethernet shield was not found.  Sorry, can't run without hardware. :(");  
+
+             while (true) {
       delay(1); // do nothing, no point running without Ethernet hardware
     }
   }
   if (Ethernet.linkStatus() == LinkOFF) {
     Serial.println("Ethernet cable is not connected.");
+lcd.print("  Ethernet cable not connected.");  
+//This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
+  if (((millis() - delayStart2) >= 700)) {
+            lcd.scrollDisplayLeft();
+      delayStart2 = millis(); //initializes this timer
+
+ }  
   }
 
-  lcd.setCursor(2, 0); // Set the cursor on the third column and first row.
+
+if (Ethernet.linkStatus() != LinkOFF) {
+    lcd.setCursor(2, 0); // Set the cursor on the third column and first row.
   lcd.print(Ethernet.localIP()); // Print the IP
   lcd.setCursor(2, 1); //Set the cursor on the third column and the second row (counting starts at 0!).
   lcd.print(port);//Print the port
+
+}
+
+
+  
   
   // start listening for clients
   server.begin();
@@ -124,6 +141,13 @@ void loop() {
       delayStart = millis();
   }
 
+
+
+//TO DO: MES4(MEs1) Koppelen aan buttons: TUESDAY. LED TOEVOEGEN
+// LED: Array aan ints aanmaken voor verschillende morse LED signalen. Elke keer als timer afgaat telt int op, wordt index van array.  
+    
+
+
  // This sets the recieving message to the preset message matching the button.
   // if(!digitalRead(8))
   // {
@@ -142,17 +166,17 @@ void loop() {
   // }
 
   // when the client sends the first byte, say hello:
-  if (client) {
+  if (client) 
+    {
     if (!alreadyConnected) {
       // clear out the input buffer:
       client.flush();
       Serial.println("App connected");
       alreadyConnected = true;
-
-     
     }
   
-    if (client.available() > 0) {
+    if (client.available() > 0) 
+      {
       
       // read the bytes incoming from the client:
       char thisChar = client.read();
@@ -162,14 +186,14 @@ void loop() {
       //This is for the <ECHO> command.
       Serial.write(thisChar);
       if (thisChar == '>')
-      {
-        Serial.println("");
-        respons = reply(command);
-        Serial.println("Responding: " + respons);
-        client.println(respons);
-        respons = "";
-        command = "";
-      }
+        {
+          Serial.println("");
+          respons = reply(command);
+          Serial.println("Responding: " + respons);
+          client.println(respons);
+          respons = "";
+          command = "";
+        }
 
       if (thisChar == '$')
       {
@@ -193,10 +217,9 @@ void loop() {
         command = "";
       }
 
-      //This is for the Temp& command      
+      //This is for the Temp& command.     
       if(thisChar == '&')
       {
-        
         Serial.println("");
         respons = reply(command);
         Serial.println("Responding: " + respons);
@@ -220,15 +243,24 @@ String reply(String cmd)
   if (cmd == "<ECHO>")
   {
     Serial.println("Echo command recognized");
-    return "<ECHO>";
-  }
+  lcd.clear();
+  lcd.print("Echo received!");
+  return "<ECHO>";
+
+ }  
+
+    
+
+  
 
   //This sends back the temperature.
   if (cmd == "Temp&")
   {
     Serial.println("Reading Temperature"); 
     return String("Temp: "+String(temp) + "C Humd: "+String(hum) +"%");
-  }
+ }  
+
+
 
   //This is both for updating the preset messages on the phone and for sending messages to the phone.
   //Mes4 is for the sending to the phone.
@@ -245,24 +277,16 @@ String reply(String cmd)
 
     if (cmd[cmd.length()-1] == '*' && cmd[cmd.length()-2] != '4')
     {
-
-
-      int x = cmd[cmd.length()-2]-'0';
+      int index = cmd[cmd.length()-2]-'0';
       
-      Serial.println("Changing Mes" +String(x)+" to "+cmd);
+      Serial.println("Changing Mes" +String(index)+" to "+cmd);
       cmd.remove(cmd.length()-1);
       cmd.remove(cmd.length()-2);
 
       
-      Messages[x] = cmd;
+      Messages[index] = cmd;
       return "<OK>";
       
-    }
-
-    if (cmd[cmd.length()-2] == '4')
-    {
-      Serial.println("Send message: "+mes4); 
-      return String( mes4 +'#');
     }
   }
 
