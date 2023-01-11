@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
             x:Class="Arduino_App_16.MainPage"
-            BackgroundColor="white">
+             BackgroundColor="White">
 
-    <StackLayout VerticalOptions="CenterAndExpand" Spacing="50">
+    <StackLayout VerticalOptions="FillAndExpand">
         <!-- Header -->
         <!-- Placement for the Logo and description -->
         <Label Text="FlashR" 
@@ -12,7 +12,8 @@
                TextColor="White"
                FontSize="30"
                FontAttributes="Bold"
-               Padding="0,20,20,20"
+               HeightRequest="80"
+               Padding="0,0,20,0"
                HorizontalTextAlignment ="end"></Label>
 
         <!--Logo app
@@ -21,74 +22,54 @@
 
 
         <!-- description of the app, welcome message -->
-        <Label Text="Description of how to use the app"
+        <Label Text="Let me write a long sentence here to see how it reacts to the rest of the interface. yeah that is indeed what I exprected.So I will make the sentence longer for a better layout. "
                HorizontalTextAlignment="Center"
-               TextColor="DarkGray"></Label>
+               TextColor="DarkGray"
+               Margin="10"></Label>
 
         <!-- Body -->
 
         <!-- Made a grid for the buttons to place them in a square alltogether -->
-        <Grid Padding="20,0,20,0"
-                          RowSpacing="30"
-                          ColumnSpacing="30"
-                          HorizontalOptions="CenterAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="170"/>
+        <Grid
+              HorizontalOptions="CenterAndExpand" Margin="20"
+            VerticalOptions="CenterAndExpand">
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="170"/>
-                <RowDefinition Height="170"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <!-- Buttons for Navigation -->
 
-            <Button Text="Sent Message"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="DarkGray"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    Padding="10"
+            <Button Text="Send Message"
                     Grid.Column="0"
                     Grid.Row="0"
                     Clicked="NavigateTo_Communication"
                     ></Button>
 
             <Button Text="Check Temperature"
-                    FontAttributes="Bold"
-                    Padding="10"
-                    FontSize="14"
                     Grid.Column="1"
                     Grid.Row="0"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="DarkGray"></Button>
+                    Clicked="NavigateTo_TempPage"
+                    ></Button>
 
             <Button Text="Settings"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
                     Grid.Row="1"
                     Clicked="NavigateTo_Settings"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="DarkGray"></Button>
-
-            <Button Text="Morse Code"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="DarkGray"></Button>
+                    ></Button>
         </Grid>
 
         <!-- Footer -->
 
         <Label
             BackgroundColor="Teal"
-            Padding="40"></Label>
+            HeightRequest="150"
+            
+            ></Label>
 
 
     </StackLayout>

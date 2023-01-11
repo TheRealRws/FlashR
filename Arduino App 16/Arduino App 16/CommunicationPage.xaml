@@ -6,7 +6,7 @@
              BackgroundColor="white">
     <ContentPage.Content>
 
-        <StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand">
             <!-- Header -->
 
             <Label Text="Send Message" 
@@ -35,17 +35,13 @@
 
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
-                    BackgroundColor="LightGray"
                     Clicked="Toggle_LED_Clicked"
-                    Margin="20,5,20,0"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="Gray"></Button>
+                    HeightRequest="50"
+                    Margin="20"
+                    ></Button>
 
             <Label x:Name="recieved" ></Label>
-            <!-- temperatuur-->
-            <Label x:Name="tempC" ></Label>
-
+                        
             <Label Text="Preprogrammed messages:" 
                    FontSize="20"
                    TextColor="black"
@@ -78,17 +74,16 @@
             <Button Text="Change Messages"
                     x:Name="UpdateMes"
                     Clicked="UpdateMessages"
-                    BackgroundColor="LightGray"
-                    Margin="20,5,20,5"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="Gray"></Button>
+                    HeightRequest="50"
+                    Margin="20"
+                    ></Button>
 
             <!-- Footer -->
 
             <Label
             BackgroundColor="Teal"
-            Padding="40"></Label>
+            HeightRequest="100"
+            Padding="0,20,20,0"></Label>
 
         </StackLayout>
     </ContentPage.Content>

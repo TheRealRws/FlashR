@@ -21,15 +21,6 @@ namespace Arduino_App_16
             //This pulls the preset messages.
 
 
-
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
-            {
-                //this pulls the pulls the temp and humidity
-                tempC.Text = Connection.ReadTemp();
-                return true; // True = Repeat again, False = Stop the timer
-            });
-
-
             Device.StartTimer(TimeSpan.FromSeconds(31), () =>
             {
                 //this pulls the recieving message every 5 seconds

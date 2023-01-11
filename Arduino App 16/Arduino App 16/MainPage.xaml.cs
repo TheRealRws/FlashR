@@ -26,5 +26,9 @@ namespace Arduino_App_16
             await Navigation.PushAsync(new SettingsPage());
 
         }
+        async void NavigateTo_TempPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new temperaturePage());
+        }
     }
 }

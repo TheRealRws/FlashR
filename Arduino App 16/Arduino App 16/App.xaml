@@ -4,5 +4,25 @@
              x:Class="Arduino_App_16.App">
     <Application.Resources>
 
+        
+
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="20" />
+            <Setter Property="RowSpacing" Value="20" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="BorderColor" Value="DarkGray"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+            <Setter Property="FontAttributes" Value="bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HeightRequest" Value="150"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+       
     </Application.Resources>
 </Application>

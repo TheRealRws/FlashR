@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Arduino_App_16.SettingsPage"
-             Title="Settings">
+             Title="Settings"
+             BackgroundColor="white">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" HeightRequest="800">
+        <StackLayout VerticalOptions="FillAndExpand">
             
             <!-- Header -->
             
@@ -12,13 +13,13 @@
                BackgroundColor="Teal"
                TextColor="White"
                FontSize="30"
+               Padding="20"
                FontAttributes="Bold"
-               Padding="0,20,20,20"
                HorizontalTextAlignment ="end"></Label>
             
             <!-- Body -->
             
-            <Label Text="IP address"
+            <Label Text="IP Address"
                    FontSize="20"
                    TextColor="Black"
                    Padding="20"/>
@@ -55,16 +56,14 @@
             
             <Button Text="Test Connection"
                     Clicked="Test_Connection_Clicked"
-                    Padding="40"
-                    Margin="20,0,20,20"
-                    CornerRadius="10"
-                    BorderColor="gray"
-                    BorderWidth="2"/>
+                    HeightRequest="50"
+                    Margin="20"
+                    />
             <!-- Footer -->
             
             <Label
             BackgroundColor="Teal"
-            Padding="90"></Label>
+            HeightRequest="800"></Label>
 
         </StackLayout>
     </ContentPage.Content>
