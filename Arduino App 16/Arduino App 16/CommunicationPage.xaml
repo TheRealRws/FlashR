@@ -51,7 +51,8 @@
 
             <!-- Input for the preprogrammed message -->
             <Label x:Name="Info1" ></Label>
-            <Entry x:Name="Mes1" 
+            <Entry x:Name="Mes1"
+                   MaxLength="15"
                    Placeholder="Put the first message here."
                    BackgroundColor="LightGray"
                    TextColor="Black"
@@ -60,7 +61,8 @@
             
             <!-- Input for the preprogrammed message -->
             <Label x:Name="Info2" ></Label>
-            <Entry x:Name="Mes2" 
+            <Entry x:Name="Mes2"
+                   MaxLength="15"
                    Placeholder="Put the second message here."
                    BackgroundColor="LightGray"
                    TextColor="Black"
@@ -70,6 +72,7 @@
             <!-- Input for the preprogrammed message -->
             <Label x:Name="Info3" ></Label>
             <Entry x:Name="Mes3" 
+                   MaxLength="15"
                    Placeholder="Put the third message here."
                    BackgroundColor="LightGray"
                    TextColor="Black"
