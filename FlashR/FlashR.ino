@@ -42,6 +42,7 @@ String command = ""; // buffer for incoming commands
 int delayStart; //Stores the start time of the Timer.
 int delayStart2; //Stores the start time of another Timer
 int delayStart3; //Stores the start time of another Timer
+int delayStart4; //Stores the start time of another Timer
 int messageLedSignal[25]={1500, 1500, 1500, 1500, 1500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 1500, 1500, 500, 1500, 1500, 1500, 1500, 1500, 1500, 1500}; //Array for the signal for LED, reacting on a message.
 int ledCounter = 0;
 int testInt = 1; //an int used as testing int for the LED sequence to start
@@ -53,11 +54,13 @@ float hum;  //Stores humidity value
 float temp; //Stores temperature value
 
 //These are the preset messages.
-String Messages[4]={"ok","no","give me 5 minutes", "Something"};
+String Messages[4]={"ok","no","give me 5 minutes if you would like a bagel", "Something"};
 String respons = "";
 
 
-
+bool scrollAllow = true;
+int scrollCounter = 0;
+int scrollAmount= 0;
 
 
 
@@ -75,6 +78,7 @@ void setup() {
   delayStart = millis();
   delayStart2 = millis();
   delayStart3 = millis();
+  delayStart4 = millis();
   
   // set pin 3 to output for MORSE LED
   pinMode(3, OUTPUT);
@@ -85,7 +89,7 @@ void setup() {
   //Pins for the buttons.
   pinMode(8, INPUT); //mes1
   pinMode(9, INPUT); //mes2
-  pinMode(10, INPUT); //mes3
+  pinMode(6, INPUT); //mes3
 
   // initialize the Ethernet device
   Ethernet.init(10);
@@ -94,7 +98,7 @@ void setup() {
   // Open serial communications for debugging
   Serial.begin(9600);
 
-
+lcd.autoscroll();
 
   lcd.init();
   lcd.backlight();
@@ -112,14 +116,16 @@ void setup() {
   }
   if (Ethernet.linkStatus() == LinkOFF) {
     Serial.println("Ethernet cable is not connected.");
-    lcd.print("  Ethernet cable not connected.");  
-  //        while (true) {    
-  // //This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
-  // if (((millis() - delayStart2) >= 700)) {
-  //          lcd.autoscroll();
-  //     delayStart2 = millis(); //initializes this timer
-  // }
-//  }  
+     lcd.print(" Ethernet cable ");
+     lcd.setCursor(0, 1)  ;
+     lcd.print(" not connected.");
+          while (true) {    
+  //This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
+  if (((millis() - delayStart2) >= 700)) {
+      delayStart2 = millis(); //initializes this timer
+  }
+
+ }  
   }
 
 
@@ -130,16 +136,15 @@ if (Ethernet.linkStatus() != LinkOFF) {
   lcd.print(port);//Print the port
 
 }
-
-
-  
-  
   // start listening for clients
   server.begin();
   //This prints the IP in serial monitor.
   Serial.print("IoT server address: ");
   Serial.println(Ethernet.localIP());
 }
+
+
+
 
 void loop() {
   // wait for a new client:
@@ -152,6 +157,24 @@ void loop() {
       temp = dht.readTemperature();
       hum = dht.readHumidity();
       delayStart = millis();
+  }
+  if ((millis() - delayStart4) >= 500 && scrollAllow) 
+  {
+      
+      if(scrollCounter >= scrollAmount+2)
+      {
+        scrollCounter = 0;
+        scrollAllow = false;
+      }
+      if(scrollCounter > scrollAmount/2)
+      {
+        lcd.scrollDisplayRight();
+      }else if(scrollAllow)
+      {
+        lcd.scrollDisplayLeft();
+      }
+      scrollCounter++;
+      delayStart4 = millis();
   }
 
 
@@ -184,26 +207,34 @@ if (ledCounter >= sizeof(messageLedSignal)/ sizeof(int))
 // This sets the recieving message to the preset message matching the button.
   if(digitalRead(8) > 0)
     {
-         Serial.println(digitalRead(8));
-          lcd.print("Changed message to 1.");
+      lcd.clear();
+          Serial.println("Changed message:" + Messages[0]);
+           lcd.print("Changed message:");
+          lcd.setCursor(0, 1);
+          lcd.print(Messages[0]);
+       Messages[3] = Messages[0];  
+      }
 
-      Messages[3] = Messages[0];  
+   if(digitalRead(9) > 0)
+     {
+             lcd.clear();
+           Serial.println("Changed message:" + Messages[1]);
+         lcd.print("Changed message:");
+                   lcd.setCursor(0, 1);
+                   lcd.print(Messages[1]);
+       Messages[3] = Messages[1];
+           }
+
+   if(digitalRead(6))
+     {
+             lcd.clear();
+           Serial.println("Changed message:" + Messages[2]);
+           lcd.print("Changed message:");
+           lcd.setCursor(0, 1);
+           lcd.print(Messages[2]);
+
+       Messages[3] = Messages[2];
      }
-
-  if(digitalRead(9) > 0)
-    {
-        //  Serial.println("changed to 2");
-        lcd.print("Changed message to 2.");
-      Messages[3] = Messages[1];
-    }
-
-  if(digitalRead(10) > 0)
-    {
-        //  Serial.println("changed to 3");
-          lcd.print("Changed message to 2.");
-
-      Messages[3] = Messages[2];
-    }
 
 
 
@@ -221,6 +252,7 @@ if (ledCounter >= sizeof(messageLedSignal)/ sizeof(int))
       // clear out the input buffer:
       client.flush();
       Serial.println("App connected");
+      lcd.print("App connected!");
       alreadyConnected = true;
     }
   
@@ -348,8 +380,10 @@ String reply(String cmd)
     Serial.println("<OK>");
 
     //!!!!!!!!!!!!!!!!!Display the cmd here on display.!!!!!!!!!!!!!!!!!!!!!
-  lcd.print(Messages[3]);
-
+  lcd.print(" " + cmd);
+ 
+    scrollAmount = cmd.length();
+    scrollAllow = true;
 
     return "<OK>";
   }
