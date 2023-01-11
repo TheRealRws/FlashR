@@ -6,7 +6,7 @@
 
     <StackLayout VerticalOptions="FillAndExpand">
         <!-- Header -->
-        <!-- Placement for the Logo and description -->
+        <!-- Placement for Header bar with Product name -->
         <Label Text="FlashR" 
                BackgroundColor="Teal"
                TextColor="White"
@@ -16,11 +16,6 @@
                Padding="0,0,20,0"
                HorizontalTextAlignment ="end"></Label>
 
-        <!--Logo app
-        <Image Source="ic_launcher_round"/>
-        -->
-
-
         <!-- description of the app, welcome message -->
         <Label Text="This App has been developed to make contact with the Arduino device for quick communication between the device and the App."
                HorizontalTextAlignment="Center"
@@ -28,12 +23,12 @@
                Margin="10"></Label>
 
         <!-- Body -->
-
-        <!-- Made a grid for the buttons to place them in a square alltogether -->
+        <!-- A grid for the buttons to place them in a square alltogether for a controlled layout -->
         <Grid
               HorizontalOptions="CenterAndExpand" Margin="20"
             VerticalOptions="CenterAndExpand">
-
+            
+            <!-- layout of the grid itself, made two rows and two columns -->
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -42,8 +37,8 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            
             <!-- Buttons for Navigation -->
-
             <Button Text="Send Message"
                     Grid.Column="0"
                     Grid.Row="0"
@@ -64,8 +59,7 @@
         </Grid>
 
         <!-- Footer -->
-
-        <Label
+            <Label
             BackgroundColor="Teal"
             HeightRequest="150"
             

@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Arduino_App_16.App">
     <Application.Resources>
-
-        
-
+        <!-- applied styles for the buttons and grid -->
+     
         <Style TargetType="Grid">
             <Setter Property="ColumnSpacing" Value="20" />
             <Setter Property="RowSpacing" Value="20" />

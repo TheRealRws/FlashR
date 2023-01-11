@@ -20,7 +20,7 @@ namespace Arduino_App_16
         {
             InitializeComponent();
         }
-
+        //test the connections with the Arduino via the Wifi
         private void Test_Connection_Clicked(object sender, EventArgs e)
         {
             string ip = EntryIP.Text;

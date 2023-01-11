@@ -36,8 +36,7 @@
                    Padding="20"
                    VerticalOptions="CenterAndExpand"/>
             
-            
-            
+                       
             <!-- Footer -->
 
             <Label

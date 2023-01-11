@@ -7,7 +7,7 @@
     <ContentPage.Content>
 
         <StackLayout VerticalOptions="FillAndExpand">
-            <!-- Header -->
+            <!-- Header and Text for which page you are at -->
 
             <Label Text="Send Message" 
                BackgroundColor="Teal"
@@ -18,21 +18,23 @@
                HorizontalTextAlignment ="end"></Label>
 
             <!-- Body -->
-
+            <!-- Label with description for the text input. -->
             <Label Text="Recieved Message:" 
                    FontSize="20"
                    TextColor="Black"
                    Padding="20,0,0,0"></Label>
 
             <Label x:Name="RecMes" ></Label>
-
+            
+            <!-- input for text to send. -->
             <Entry x:Name="InputText" 
                    Placeholder="Put in message here."
                    BackgroundColor="LightGray"
                    TextColor="Black"
                    PlaceholderColor="Gray"
                    Margin="20,-10,20,0"></Entry>
-
+            
+            <!-- Button to sent the text written in the input above -->
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
                     Clicked="Toggle_LED_Clicked"
@@ -41,12 +43,13 @@
                     ></Button>
 
             <Label x:Name="recieved" ></Label>
-                        
+            <!-- Label with description for the text input. -->
             <Label Text="Preprogrammed messages:" 
                    FontSize="20"
                    TextColor="black"
                    Padding="20,0,0,0"></Label>
 
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info1" ></Label>
             <Entry x:Name="Mes1" 
                    Placeholder="Put the first message here."
@@ -54,7 +57,8 @@
                    TextColor="Black"
                    PlaceholderColor="Gray"
                    Margin="20,-10,20,0"></Entry>
-
+            
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info2" ></Label>
             <Entry x:Name="Mes2" 
                    Placeholder="Put the second message here."
@@ -63,6 +67,7 @@
                    PlaceholderColor="Gray"
                    Margin="20,0,20,0"></Entry>
 
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info3" ></Label>
             <Entry x:Name="Mes3" 
                    Placeholder="Put the third message here."
@@ -71,6 +76,7 @@
                    PlaceholderColor="Gray"
                    Margin="20,0,20,0"></Entry>
 
+            <!-- Button to change the preprogrammed text with the text that's written in the input above -->
             <Button Text="Change Messages"
                     x:Name="UpdateMes"
                     Clicked="UpdateMessages"

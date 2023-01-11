@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand">
             
-            <!-- Header -->
+            <!-- Header and title -->
             
             <Label Text="Settings" 
                BackgroundColor="Teal"
@@ -24,6 +24,7 @@
                    TextColor="Black"
                    Padding="20"/>
             
+            <!-- input for the IP Adress -->
             <Entry Text="192.168.2.177"
                    x:Name="EntryIP"
                    TextColor="Black"
@@ -37,7 +38,8 @@
                    FontSize="20"
                    TextColor="Black"
                    Padding="20"/>
-            
+
+            <!-- Input to change the port -->
             <Entry Text="20080"
                    x:Name="EntryPort"
                    BackgroundColor="LightGray"
@@ -46,14 +48,16 @@
                    Placeholder="Insert Port here"
                    PlaceholderColor="Gray"
                    Margin="20,0,20,0"/>
-            
+
+            <!-- When an echo is not established, the label shows not connected in red. -->
             <Label Text="Not Connected"
                    FontSize="16"
                    FontAttributes="Bold"
                    x:Name="LabelConnected"
                    TextColor="Red"
                    Padding="20,20,20,0"/>
-            
+
+            <!-- Button to test the connection with the given inputs of the IP and Port. -->
             <Button Text="Test Connection"
                     Clicked="Test_Connection_Clicked"
                     HeightRequest="50"

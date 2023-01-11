@@ -26,6 +26,7 @@ namespace Arduino_App_16
             await Navigation.PushAsync(new SettingsPage());
 
         }
+        //once the button "TemperaturePage" is pressed, the function will call a new Temperature Page"
         async void NavigateTo_TempPage(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new temperaturePage());
