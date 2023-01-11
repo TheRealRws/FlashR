@@ -4,6 +4,7 @@
 #include <DHT_U.h>
 #include <Adafruit_Sensor.h>
 
+#include <Ethernet.h>
 #include <splash.h>
 
 
@@ -25,7 +26,6 @@ LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4)
 //Input your desired port here.
 int port = 20080;
 
-#include <Ethernet.h>
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network.
@@ -37,13 +37,13 @@ IPAddress ip(192, 168, 2, 177);
 EthernetServer server(port);
 
 bool alreadyConnected = false; //sets the default condition of the connection
-bool ledOn = false; //the bool that toggles the LED on and off
+bool ledOn = true; //the bool that toggles the LED on and off
 String command = ""; // buffer for incoming commands
 int delayStart; //Stores the start time of the Timer.
 int delayStart2; //Stores the start time of another Timer
 int delayStart3; //Stores the start time of another Timer
-int messageLedSignal[25]={150, 150, 150, 150, 150, 150, 50, 150, 50, 150, 50, 150, 50, 350, 150, 150, 50, 150, 150, 150, 150, 150, 150, 150, 5000}; //Array for the signal for LED, reacting on a message.
-int ledSignalSequenceRunner = 0;
+int messageLedSignal[25]={1500, 1500, 1500, 1500, 1500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 1500, 1500, 500, 1500, 1500, 1500, 1500, 1500, 1500, 1500}; //Array for the signal for LED, reacting on a message.
+int ledCounter = 0;
 int testInt = 1; //an int used as testing int for the LED sequence to start
 
 // ON 150 SSS 150 SSS 150   OFF 150 On  50 SSS 50 SSS 50 SSS 50   OFF 350 ON  150 SSS 50  OFF 150 ON  150 SSS 150 SSS 150 OFF
@@ -86,7 +86,6 @@ void setup() {
   pinMode(8, INPUT); //mes1
   pinMode(9, INPUT); //mes2
   pinMode(10, INPUT); //mes3
-  pinMode(11, INPUT); //Button
 
   // initialize the Ethernet device
   Ethernet.init(10);
@@ -114,13 +113,13 @@ void setup() {
   if (Ethernet.linkStatus() == LinkOFF) {
     Serial.println("Ethernet cable is not connected.");
     lcd.print("  Ethernet cable not connected.");  
-         while (true) {    
-  //This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
-  if (((millis() - delayStart2) >= 700)) {
-           lcd.autoscroll();
-      delayStart2 = millis(); //initializes this timer
-  }
- }  
+  //        while (true) {    
+  // //This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
+  // if (((millis() - delayStart2) >= 700)) {
+  //          lcd.autoscroll();
+  //     delayStart2 = millis(); //initializes this timer
+  // }
+//  }  
   }
 
 
@@ -156,28 +155,55 @@ void loop() {
   }
 
 
+//Ledpin code, for the LED to do the specific secret Morse signal whenever the cmd is triggered. 
+// ON 150 SSS 150 SSS 150   OFF 150 On  50 SSS 50 SSS 50 SSS 50   OFF 350 ON  150 SSS 50  OFF 150 ON  150 SSS 150 SSS 150 OFF
+  if (ledOn == false)
+  {
+    digitalWrite(3, LOW);
+  }
+
+//This is the loop that toggles the LED to do the specific secret Morse signal whenever the cmd is triggered. 
+if ((millis() - delayStart3) >= (messageLedSignal[ledCounter]/2) && ledOn) 
+{
+      ledCounter++;
+if (ledCounter >= sizeof(messageLedSignal)/ sizeof(int))
+  {
+    ledOn = false;
+    ledCounter = 0;
+  }
+
+      delayStart3 = millis(); //initializes this timer
+      digitalWrite(3, !digitalRead(3));
+}
 
 //TO DO: MES4(MEs1) Koppelen aan buttons: TUESDAY. LED TOEVOEGEN
 // LED: Array aan ints aanmaken voor verschillende morse LED signalen. Elke keer als timer afgaat telt int op, wordt index van array.  
     
 
 
- //This sets the recieving message to the preset message matching the button.
-// if(!digitalRead(8))
-//   {
-//        Serial.println("changed to 1");
-//     mes4 = mes1;
-//   }
-// if(!digitalRead(9))
-//   {
-//        Serial.println("changed to 2");
-//     mes4 = mes2;
-//   }
-// if(!digitalRead(10))
-//   {
-//        Serial.println("changed to 3");
-//     mes4 = mes3;
-//   }
+// This sets the recieving message to the preset message matching the button.
+  if(digitalRead(8) > 0)
+    {
+         Serial.println(digitalRead(8));
+          lcd.print("Changed message to 1.");
+
+      Messages[3] = Messages[0];  
+     }
+
+  if(digitalRead(9) > 0)
+    {
+        //  Serial.println("changed to 2");
+        lcd.print("Changed message to 2.");
+      Messages[3] = Messages[1];
+    }
+
+  if(digitalRead(10) > 0)
+    {
+        //  Serial.println("changed to 3");
+          lcd.print("Changed message to 2.");
+
+      Messages[3] = Messages[2];
+    }
 
 
 
@@ -322,22 +348,9 @@ String reply(String cmd)
     Serial.println("<OK>");
 
     //!!!!!!!!!!!!!!!!!Display the cmd here on display.!!!!!!!!!!!!!!!!!!!!!
-  lcd.print(cmd);
+  lcd.print(Messages[3]);
 
-//Ledpin code, for the LED to do the specific secret Morse signal whenever the cmd is triggered. 
-// ON 150 SSS 150 SSS 150   OFF 150 On  50 SSS 50 SSS 50 SSS 50   OFF 350 ON  150 SSS 50  OFF 150 ON  150 SSS 150 SSS 150 OFF
-  if (ledOn == false)
-  {
-    digitalWrite(3, LOW);
-  }
 
-//This is the loop that toggles the LED to do the specific secret Morse signal whenever the cmd is triggered. 
-if (((millis() - delayStart3) >= messageLedSignal[25] && ledOn )) 
-{
-      ledSignalSequenceRunner++;
-      delayStart3 = millis(); //initializes this timer
-      ledOn = !ledOn;
-}
     return "<OK>";
   }
 
