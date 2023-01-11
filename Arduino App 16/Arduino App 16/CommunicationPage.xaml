@@ -17,6 +17,9 @@
                Padding="0,20,20,20"
                HorizontalTextAlignment ="end"></Label>
 
+            <Image Source="Logo.round.png"
+                   />
+
             <!-- Body -->
             <!-- Label with description for the text input. -->
             <Label Text="Recieved Message:" 
