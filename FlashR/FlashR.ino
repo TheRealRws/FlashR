@@ -37,9 +37,18 @@ IPAddress ip(192, 168, 2, 177);
 EthernetServer server(port);
 
 bool alreadyConnected = false; //sets the default condition of the connection
+bool ledOn = false; //the bool that toggles the LED on and off
 String command = ""; // buffer for incoming commands
 int delayStart; //Stores the start time of the Timer.
-int delayStart2;
+int delayStart2; //Stores the start time of another Timer
+int delayStart3; //Stores the start time of another Timer
+int messageLedSignal[25]={150, 150, 150, 150, 150, 150, 50, 150, 50, 150, 50, 150, 50, 350, 150, 150, 50, 150, 150, 150, 150, 150, 150, 150, 5000}; //Array for the signal for LED, reacting on a message.
+int ledSignalSequenceRunner = 0;
+int testInt = 1; //an int used as testing int for the LED sequence to start
+
+// ON 150 SSS 150 SSS 150   OFF 150 On  50 SSS 50 SSS 50 SSS 50   OFF 350 ON  150 SSS 50  OFF 150 ON  150 SSS 150 SSS 150 OFF
+
+
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
 
@@ -65,7 +74,11 @@ void setup() {
   //Initializes timers.
   delayStart = millis();
   delayStart2 = millis();
+  delayStart3 = millis();
   
+  // set pin 3 to output for MORSE LED
+  pinMode(3, OUTPUT);
+
   // set pin 7 to output
   pinMode(7, OUTPUT);
 
@@ -100,12 +113,13 @@ void setup() {
   }
   if (Ethernet.linkStatus() == LinkOFF) {
     Serial.println("Ethernet cable is not connected.");
-lcd.print("  Ethernet cable not connected.");  
-//This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
+    lcd.print("  Ethernet cable not connected.");  
+         while (true) {    
+  //This is the loop that makes the LCD text scroll to the right, after which text eventually becomes visible again and then on and on. 
   if (((millis() - delayStart2) >= 700)) {
-            lcd.scrollDisplayLeft();
+           lcd.autoscroll();
       delayStart2 = millis(); //initializes this timer
-
+  }
  }  
   }
 
@@ -148,22 +162,31 @@ void loop() {
     
 
 
- // This sets the recieving message to the preset message matching the button.
-  // if(!digitalRead(8))
-  // {
-  //     Serial.println("changed to 1");
-  //   mes4 = mes1;
-  // }
-  // if(!digitalRead(9))
-  // {
-  //     Serial.println("changed to 2");
-  //   mes4 = mes2;
-  // }
-  // if(!digitalRead(10))
-  // {
-  //     Serial.println("changed to 3");
-  //   mes4 = mes3;
-  // }
+ //This sets the recieving message to the preset message matching the button.
+// if(!digitalRead(8))
+//   {
+//        Serial.println("changed to 1");
+//     mes4 = mes1;
+//   }
+// if(!digitalRead(9))
+//   {
+//        Serial.println("changed to 2");
+//     mes4 = mes2;
+//   }
+// if(!digitalRead(10))
+//   {
+//        Serial.println("changed to 3");
+//     mes4 = mes3;
+//   }
+
+
+
+
+
+
+
+
+
 
   // when the client sends the first byte, say hello:
   if (client) 
@@ -299,7 +322,22 @@ String reply(String cmd)
     Serial.println("<OK>");
 
     //!!!!!!!!!!!!!!!!!Display the cmd here on display.!!!!!!!!!!!!!!!!!!!!!
+  lcd.print(cmd);
 
+//Ledpin code, for the LED to do the specific secret Morse signal whenever the cmd is triggered. 
+// ON 150 SSS 150 SSS 150   OFF 150 On  50 SSS 50 SSS 50 SSS 50   OFF 350 ON  150 SSS 50  OFF 150 ON  150 SSS 150 SSS 150 OFF
+  if (ledOn == false)
+  {
+    digitalWrite(3, LOW);
+  }
+
+//This is the loop that toggles the LED to do the specific secret Morse signal whenever the cmd is triggered. 
+if (((millis() - delayStart3) >= messageLedSignal[25] && ledOn )) 
+{
+      ledSignalSequenceRunner++;
+      delayStart3 = millis(); //initializes this timer
+      ledOn = !ledOn;
+}
     return "<OK>";
   }
 
