@@ -2,36 +2,37 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Arduino_App_16.CommunicationPage"
-             Title="Communication">
+             Title="Communication"
+             BackgroundColor="white">
     <ContentPage.Content>
-        
+
         <StackLayout>
             <!-- Header -->
-            
-            <Label Text="Sent Message" 
+
+            <Label Text="Send Message" 
                BackgroundColor="Teal"
                TextColor="White"
                FontSize="30"
                FontAttributes="Bold"
                Padding="0,20,20,20"
                HorizontalTextAlignment ="end"></Label>
-            
+
             <!-- Body -->
 
-            <Label Text="Recieved message:" 
+            <Label Text="Recieved Message:" 
                    FontSize="20"
                    TextColor="Black"
                    Padding="20,0,0,0"></Label>
 
             <Label x:Name="RecMes" ></Label>
-            
+
             <Entry x:Name="InputText" 
                    Placeholder="Put in message here."
                    BackgroundColor="LightGray"
                    TextColor="Black"
                    PlaceholderColor="Gray"
                    Margin="20,-10,20,0"></Entry>
-            
+
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
                     BackgroundColor="LightGray"
@@ -40,11 +41,11 @@
                     CornerRadius="10"
                     BorderWidth="2"
                     BorderColor="Gray"></Button>
-            
+
             <Label x:Name="recieved" ></Label>
             <!-- temperatuur-->
             <Label x:Name="tempC" ></Label>
-            
+
             <Label Text="Preprogrammed messages:" 
                    FontSize="20"
                    TextColor="black"
@@ -82,13 +83,13 @@
                     CornerRadius="10"
                     BorderWidth="2"
                     BorderColor="Gray"></Button>
-            
+
             <!-- Footer -->
-            
+
             <Label
             BackgroundColor="Teal"
             Padding="40"></Label>
-            
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
