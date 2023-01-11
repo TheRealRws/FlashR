@@ -22,7 +22,7 @@
 
 
         <!-- description of the app, welcome message -->
-        <Label Text="Let me write a long sentence here to see how it reacts to the rest of the interface. yeah that is indeed what I exprected.So I will make the sentence longer for a better layout. "
+        <Label Text="This App has been developed to make contact with the Arduino device for quick communication between the device and the App."
                HorizontalTextAlignment="Center"
                TextColor="DarkGray"
                Margin="10"></Label>
