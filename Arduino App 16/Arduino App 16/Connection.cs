@@ -97,6 +97,7 @@ namespace Arduino_App_16
         //This sends the mes + indentifier command and returns the message.
         public static string GrabMes(int i)
         {
+            mes = "";
             SendCommand("Mes"+i+"#");
             return mes;
         }

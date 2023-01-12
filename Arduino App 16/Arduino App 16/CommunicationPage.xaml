@@ -27,7 +27,11 @@
                    TextColor="Black"
                    Padding="20,0,0,0"></Label>
 
-            <Label x:Name="RecMes" ></Label>
+            <!-- Label for the message from the arduino.-->
+            <Label x:Name="RecMes" 
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20,0,0,0 "></Label>
             
             <!-- input for text to send. -->
             <Entry x:Name="InputText" 
