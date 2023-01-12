@@ -8,14 +8,14 @@
 #include <Wire.h>
 
 
-#define DHTPIN  2    // what pin we're connected to
+#define DHTPIN  2    // What pin we're connected to.
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
-//Sets the temp sensor
+//Sets the temperature sensor
 DHT dht(DHTPIN, DHTTYPE);
 
 
 // Wiring: SDA pin is connected to A4 and SCL pin to A5.
-// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered)
+// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered).
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4) for 20x4 LCD.
 
 
@@ -31,19 +31,19 @@ IPAddress ip(192, 168, 2, 177);
 // Running on Port int port.
 EthernetServer server(port);
 
-bool alreadyConnected = false; //sets the default condition of the connection
-bool ledOn = false; //the bool that toggles the LED on and off
-String command = ""; // buffer for incoming commands
+bool alreadyConnected = false; //Sets the default condition of the connection.
+bool ledOn = false; //The bool that toggles the LED on and off.
+String command = ""; //Buffer for incoming commands.
 
 long delayStart; //Stores the start time of the Timer.
-long delayStart3; //Stores the start time of another Timer
-long delayStart4; //Stores the start time of another Time
+long delayStart3; //Stores the start time of another Timer.
+long delayStart4; //Stores the start time of another Timer.
 
 int messageLedSignal[25]={1500, 1500, 1500, 1500, 1500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 1500, 1500, 500, 1500, 1500, 1500, 1500, 1500, 1500, 1500}; //Array for the signal for LED, reacting on a message.
 int ledCounter = 0;
 
-float hum;  //Stores humidity value
-float temp; //Stores temperature value
+float hum;  //Stores humidity value.
+float temp; //Stores temperature value.
 
 //These are the preset messages.
 String Messages[4]={"ok","no","give me 5 minutes", " "};
@@ -51,7 +51,7 @@ String respons = "";
 //The variables for us to manage time.
 long time = 0;
 int timeAmp = 0;
-//Scroll function variables
+//Scroll function variables.
 bool scrollAllow = false;
 int scrollCounter = 0;
 int scrollAmount= 0;
@@ -62,10 +62,10 @@ int scrollAmount= 0;
 void setup() {
 
 
-  //Initializes the temp sensor
+  //Initializes the temperature sensor.
   dht.begin();
   
-  //Pulls data from temp sensor.
+  //Pulls data from temperature sensor.
   temp = dht.readTemperature();
   hum = dht.readHumidity();
 
@@ -74,7 +74,7 @@ void setup() {
   delayStart3 = millis();
   delayStart4 = millis();
   
-  // set pin 3 to output for MORSE LED
+  //Set pin 3 to output for notification LED.
   pinMode(3, OUTPUT);
 
   //Pins for the buttons.
@@ -82,30 +82,30 @@ void setup() {
   pinMode(9, INPUT); //mes2
   pinMode(6, INPUT); //mes3
 
-  // initialize the Ethernet device
+  //Initialize the Ethernet device.
   Ethernet.init(10);
   Ethernet.begin(mac, ip);
 
-  // Open serial communications for debugging
+  //Open serial communications for debugging.
   Serial.begin(9600);
 
-  //Initializes the lcd
+  //Initializes the lcd-display. 
   lcd.init();
   lcd.backlight();
 
 
-  // Check for Ethernet hardware present
+  //Check if the Ethernet hardware is present.
   if (Ethernet.hardwareStatus() == EthernetNoHardware) 
   {
     Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware. :(");
     lcd.print ("Ethernet shield was not found.  Sorry, can't run without hardware. :(");  
     while (true) 
     {
-      delay(1); // do nothing, no point running without Ethernet hardware
+      delay(1); //Do nothing, there is no pointin running without Ethernet hardware.
     }
   }
 
-  // Check for Ethernet Cable.
+  // Check for an Ethernet Cable.
   if (Ethernet.linkStatus() == LinkOFF) 
   {
     Serial.println("Ethernet cable is not connected.");
@@ -114,23 +114,23 @@ void setup() {
     lcd.print(" not connected.");
     while (true) 
     {    
-      delay(1); // do nothing, no point running without Ethernet cable
+      delay(1); //Do nothing, there is no point in running without an Ethernet cable.
     }  
   }
 
 
   if (Ethernet.linkStatus() != LinkOFF) 
   {
-    lcd.setCursor(0, 0); // Set the cursor on the third column and first row.
-    lcd.print(Ethernet.localIP()); // Print the IP
+    lcd.setCursor(0, 0); //Set the cursor on the third column and first row.
+    lcd.print(Ethernet.localIP()); //Print the IP-address. 
     lcd.setCursor(0, 1); //Set the cursor on the third column and the second row (counting starts at 0!).
-    lcd.print(port);//Print the port
+    lcd.print(port);//Print the port.
   }
 
-  // start listening for clients
+  //Start listening for clients.
   server.begin();
 
-  //This prints the IP in serial monitor.
+  //This prints the IP-address in the serial monitor.
   Serial.print("IoT server address: ");
   Serial.println(Ethernet.localIP());
 }
@@ -138,7 +138,7 @@ void setup() {
 
 void loop() {
 
-  //This makes it so we dont get interger overflows with the timers if millis goes over 2147483647
+  //This makes it so we don't get interger overflows with the timers if millis goes over 2147483647.
   //If millis is higher than the long storage we add 1 to the time amp which will remove 2147483647 from millis. 
   //Time basically resets every 2147483647 ticks.
   if (time > 2147483620)
@@ -147,10 +147,10 @@ void loop() {
   }
   time = (millis()- (timeAmp * 2147483647));
 
-  // wait for a new client:
+  //Wait for a new client:
   EthernetClient client = server.available();
 
-  //this pulls the data from the temp/hum sensor every 5 seconds (5000mili)
+  //This pulls the data from the temperature/humidity sensor every 5 seconds (5000 milliseconds).
   if (((time - delayStart) >= 5000)) {
       
       temp = dht.readTemperature();
@@ -161,9 +161,9 @@ void loop() {
   //This allows the display to scroll.
   //To make the display scroll adjust
   //scrollAllow to True
-  //scrollAmount to the .lenght() of the string
+  //scrollAmount to the .lenght() of the string.
   //delayStart4 to time;
-  //This will then make the text go back and forth ONCE
+  //This will then make the text go back and forth only ONCE.
 
   //scrollCounter is the amount of times we have scrolled.
   if ((time - delayStart4) >= 500 && scrollAllow) 
@@ -199,11 +199,11 @@ void loop() {
         ledCounter = 0;
     }
 
-    delayStart3 = time; //initializes this timer
+    delayStart3 = time; //Initializes this timer.
     digitalWrite(3, !digitalRead(3));
   }
 
-  //turns off the LED if we dont run the loop.
+  //Turns off the LED if we dont run the loop.
   if (ledOn == false)
   {
     digitalWrite(3, LOW);
@@ -211,7 +211,7 @@ void loop() {
     
 
 
-  // This sets the recieving message to the preset message matching the button and displays the change on display.
+  //This sets the receiving message to the preset message, matching the button and displays the change on the display.
   if(digitalRead(8) > 0)
   {
       lcd.clear();
@@ -242,12 +242,12 @@ void loop() {
     Messages[3] = Messages[2];
   }
 
-  // when the client sends the first byte, say hello:
+  //When the client sends the first byte, say hello:
   if (client) 
     {
     //This makes it so on the first time you connect we display that as feedback on the display.
     if (!alreadyConnected) {
-      // clear out the input buffer:
+      // Clear out the input buffer:
       client.flush();
       Serial.println("App connected");
       lcd.clear();
@@ -258,7 +258,7 @@ void loop() {
     if (client.available() > 0) 
       {
       
-      // read the bytes incoming from the client:
+      //Read the bytes incoming from the client:
       char thisChar = client.read();
       command = String(command + thisChar);
 
@@ -278,11 +278,11 @@ void loop() {
 }
 
 //This is the reply function. It reads the command and if it matches anything it will run that code.
-//To put in your own command add an If statement with the command/indentifier.
+//To put in your own command add an If-statement with the command/identifier.
 
 String reply(String cmd)
 {
-  //We print the recieved command.
+  //We print the received command.
   Serial.println("Received command: " + cmd);
 
   //This is the general connection command.
@@ -317,11 +317,11 @@ String reply(String cmd)
 
     if (cmd[cmd.length()-1] == '*' && cmd[cmd.length()-2] != '4')
     {
-      //We store the index so we can use it to change the text after modifying the cmd string
+      //We store the index so we can use it to change the text after modifying the cmd string.
       int index = (cmd[cmd.length()-2]-'0');
       
       Serial.println("Changing Mes" +String(index)+" to "+cmd);
-      //We remove the last 2 chars from the string so its clean and then we set it in the correct index of Messages
+      //We remove the last 2 chars from the string so it's clean and then we set it in the correct index of Messages.
       cmd.remove(cmd.length()-2);
       Messages[index-1] = cmd;
       return "<OK>";
@@ -329,8 +329,8 @@ String reply(String cmd)
     }
   }
 
-  //This is the text command. In this case the arduino recieves text and dislays it on the screen.
-  //After that it sends back an <ok>  to signify its been recieved.
+  //This is the text command. In this case the arduino receives text and dislays it on the screen.
+  //After that it sends back an <OK> to signify its been received.
   if (cmd[cmd.length()-1] == '$')
   {
     //We remove the $ from the string here.
@@ -342,10 +342,10 @@ String reply(String cmd)
     lcd.print("Recieved message:");
     lcd.setCursor(0, 1);
     lcd.print(cmd);
-    //We turn on the notif LED
+    //We turn on the notification LED.
     ledOn = true;
 
-    //If the message is longer than what the display can display we scroll
+    //If the message is longer than what the display can show, we scroll.
     if(cmd.length()>10)
     {
       scrollAmount = cmd.length();
