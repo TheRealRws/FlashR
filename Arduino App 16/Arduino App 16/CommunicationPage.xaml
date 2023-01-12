@@ -2,35 +2,105 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Arduino_App_16.CommunicationPage"
-             Title="Communication">
+             Title="Communication"
+             BackgroundColor="white">
     <ContentPage.Content>
-        <StackLayout>
 
-            <Label Text="Recieved message:" ></Label>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <!-- Header and Text for which page you are at -->
 
-            <Label x:Name="RecMes" ></Label>
-            <Entry x:Name="InputText" Placeholder="Put in message here."></Entry>
+            <Label Text="Send Message" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="30"
+               FontAttributes="Bold"
+               Padding="0,20,20,20"
+               HorizontalTextAlignment ="end"></Label>
+
+            <Image Source="Logo.round.png"
+                   />
+
+            <!-- Body -->
+            <!-- Label with description for the text input. -->
+            <Label Text="Recieved Message:" 
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20,0,0,0"></Label>
+
+            <!-- Label for the message from the arduino.-->
+            <Label x:Name="RecMes" 
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20,0,0,0 "></Label>
+            
+            <!-- input for text to send. -->
+            <Entry x:Name="InputText" 
+                   Placeholder="Put in message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,-10,20,0"></Entry>
+            
+            <!-- Button to sent the text written in the input above -->
             <Button Text="Send Message"
                     x:Name="ButtonLEDToggle"
-                    BackgroundColor="Gray"
-                    Clicked="Toggle_LED_Clicked"></Button>
+                    Clicked="Toggle_LED_Clicked"
+                    HeightRequest="50"
+                    Margin="20"
+                    ></Button>
+
             <Label x:Name="recieved" ></Label>
-            <Label x:Name="tempC" ></Label>
-            <Label Text="Preprogrammed messages:" ></Label>
+            <!-- Label with description for the text input. -->
+            <Label Text="Preprogrammed messages:" 
+                   FontSize="20"
+                   TextColor="black"
+                   Padding="20,0,0,0"></Label>
 
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info1" ></Label>
-            <Entry x:Name="Mes1" Placeholder="Put the first message here."></Entry>
-
+            <Entry x:Name="Mes1"
+                   MaxLength="15"
+                   Placeholder="Put the first message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,-10,20,0"></Entry>
+            
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info2" ></Label>
-            <Entry x:Name="Mes2" Placeholder="Put the second message here."></Entry>
+            <Entry x:Name="Mes2"
+                   MaxLength="15"
+                   Placeholder="Put the second message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"></Entry>
 
+            <!-- Input for the preprogrammed message -->
             <Label x:Name="Info3" ></Label>
-            <Entry x:Name="Mes3" Placeholder="Put the third message here."></Entry>
+            <Entry x:Name="Mes3" 
+                   MaxLength="15"
+                   Placeholder="Put the third message here."
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"></Entry>
 
+            <!-- Button to change the preprogrammed text with the text that's written in the input above -->
             <Button Text="Change Messages"
                     x:Name="UpdateMes"
-                    BackgroundColor="Gray"
-                    Clicked="UpdateMessages"></Button>
+                    Clicked="UpdateMessages"
+                    HeightRequest="50"
+                    Margin="20"
+                    ></Button>
+
+            <!-- Footer -->
+
+            <Label
+            BackgroundColor="Teal"
+            HeightRequest="100"
+            Padding="0,20,20,0"></Label>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

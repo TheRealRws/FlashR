@@ -2,30 +2,72 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Arduino_App_16.SettingsPage"
-             Title="Settings">
+             Title="Settings"
+             BackgroundColor="white">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="IP address"
-                   TextColor="LawnGreen" />
+        <StackLayout VerticalOptions="FillAndExpand">
+            
+            <!-- Header and title -->
+            
+            <Label Text="Settings" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="30"
+               Padding="20"
+               FontAttributes="Bold"
+               HorizontalTextAlignment ="end"></Label>
+            
+            <!-- Body -->
+            
+            <Label Text="IP Address"
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20"/>
+            
+            <!-- input for the IP Adress -->
             <Entry Text="192.168.2.177"
                    x:Name="EntryIP"
-                   TextColor="LawnGreen"
+                   TextColor="Black"
+                   BackgroundColor="LightGray"
                    Keyboard="Numeric"
                    Placeholder="Insert IP address here"
-                   PlaceholderColor="DarkGreen"/>
+                   PlaceholderColor="gray"
+                   Margin="20,0,20,0"/>
+            
             <Label Text="Port"
-                   TextColor="LawnGreen" />
+                   FontSize="20"
+                   TextColor="Black"
+                   Padding="20"/>
+
+            <!-- Input to change the port -->
             <Entry Text="20080"
                    x:Name="EntryPort"
-                   TextColor="LawnGreen"
+                   BackgroundColor="LightGray"
+                   TextColor="Black"
                    Keyboard="Numeric"
                    Placeholder="Insert Port here"
-                   PlaceholderColor="DarkGreen"/>
+                   PlaceholderColor="Gray"
+                   Margin="20,0,20,0"/>
+
+            <!-- When an echo is not established, the label shows not connected in red. -->
             <Label Text="Not Connected"
+                   FontSize="16"
+                   FontAttributes="Bold"
                    x:Name="LabelConnected"
-                   TextColor="Red" />
+                   TextColor="Red"
+                   Padding="20,20,20,0"/>
+
+            <!-- Button to test the connection with the given inputs of the IP and Port. -->
             <Button Text="Test Connection"
-                    Clicked="Test_Connection_Clicked"/>
+                    Clicked="Test_Connection_Clicked"
+                    HeightRequest="50"
+                    Margin="20"
+                    />
+            <!-- Footer -->
+            
+            <Label
+            BackgroundColor="Teal"
+            HeightRequest="800"></Label>
 
         </StackLayout>
     </ContentPage.Content>

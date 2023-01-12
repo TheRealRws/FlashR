@@ -1,14 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:arduino_app_16="clr-namespace:Arduino_App_16"
             x:Class="Arduino_App_16.MainPage"
-            BackgroundColor="Black"
-            BarBackgroundColor="DarkGreen"
-            SelectedTabColor="White"
-            UnselectedTabColor="Gray">
+             BackgroundColor="White">
 
-    <arduino_app_16:SettingsPage/>
-    <arduino_app_16:CommunicationPage/>
+    <StackLayout VerticalOptions="FillAndExpand">
+        <!-- Header -->
+        <!-- Placement for Header bar with Product name -->
+        <Label Text="FlashR" 
+               BackgroundColor="Teal"
+               TextColor="White"
+               FontSize="30"
+               FontAttributes="Bold"
+               HeightRequest="80"
+               Padding="0,0,20,0"
+               HorizontalTextAlignment ="end"></Label>
+        
+        
 
-</TabbedPage>
+        <!-- description of the app, welcome message -->
+        <Label Text="This App has been developed to make contact with the Arduino device for quick communication between the device and the App."
+               HorizontalTextAlignment="Center"
+               TextColor="DarkGray"
+               Margin="10"></Label>
+
+        <!-- Body -->
+        <!-- A grid for the buttons to place them in a square alltogether for a controlled layout -->
+        <Grid
+              HorizontalOptions="CenterAndExpand" Margin="20"
+            VerticalOptions="CenterAndExpand">
+            
+            <!-- layout of the grid itself, made two rows and two columns -->
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Buttons for Navigation -->
+            <Button Text="Send Message"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Clicked="NavigateTo_Communication"
+                    ></Button>
+
+            <Button Text="Check Temperature"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Clicked="NavigateTo_TempPage"
+                    ></Button>
+
+            <Button Text="Settings"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Clicked="NavigateTo_Settings"
+                    ></Button>
+        </Grid>
+
+        <!-- Footer -->
+            <Label
+            BackgroundColor="Teal"
+            HeightRequest="150"
+            
+            ></Label>
+
+
+    </StackLayout>
+
+</ContentPage>
 

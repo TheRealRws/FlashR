@@ -10,9 +10,10 @@ namespace Arduino_App_16
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage (new MainPage());
         }
-
+        public static int ScreenHeight { get; set; }
+        public static int ScreenWidth { get; set; }
         protected override void OnStart()
         {
         }
