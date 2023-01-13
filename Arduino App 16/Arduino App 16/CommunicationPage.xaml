@@ -5,7 +5,7 @@
              Title="Communication"
              BackgroundColor="white">
     <ContentPage.Content>
-
+        <ScrollView>
         <StackLayout VerticalOptions="FillAndExpand">
             <!-- Header and Text for which page you are at -->
 
@@ -29,9 +29,14 @@
 
             <!-- Label for the message from the arduino.-->
             <Label x:Name="RecMes" 
+                   FontSize="16"
+                   TextColor="Black"
+                   Margin="20"></Label>
+
+            <Label Text ="Send Message:"
                    FontSize="20"
                    TextColor="Black"
-                   Padding="20,0,0,0 "></Label>
+                   Margin="20"></Label>
             
             <!-- input for text to send. -->
             <Entry x:Name="InputText" 
@@ -102,5 +107,6 @@
             Padding="0,20,20,0"></Label>
 
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
