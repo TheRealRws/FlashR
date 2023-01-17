@@ -121,6 +121,7 @@ void setup() {
 
   if (Ethernet.linkStatus() != LinkOFF) 
   {
+    lcd.clear();
     lcd.setCursor(0, 0); //Set the cursor on the third column and first row.
     lcd.print(Ethernet.localIP()); //Print the IP-address. 
     lcd.setCursor(0, 1); //Set the cursor on the third column and the second row (counting starts at 0!).

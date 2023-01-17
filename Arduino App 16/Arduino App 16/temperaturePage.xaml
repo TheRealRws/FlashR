@@ -28,7 +28,7 @@
                    TextColor="Black"
                    FontSize="60"/>
             
-            <Label Text="The temperature in the room is"
+            <Label Text="is the temperature in the room."
                    HorizontalTextAlignment="Center"
                    TextColor="DarkGray"
                    FontAttributes="Bold"
