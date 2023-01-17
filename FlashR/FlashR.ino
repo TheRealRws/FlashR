@@ -8,27 +8,27 @@
 #include <Wire.h>
 
 
-#define DHTPIN  2    // What pin we're connected to.
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
+#define DHTPIN  2    //What pin we're connected to.
+#define DHTTYPE DHT22   //DHT 22  (AM2302)
 //Sets the temperature sensor
 DHT dht(DHTPIN, DHTTYPE);
 
 
-// Wiring: SDA pin is connected to A4 and SCL pin to A5.
-// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered).
+//Wiring: SDA pin is connected to A4 and SCL pin to A5.
+//Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered).
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4) for 20x4 LCD.
 
 
 //Input your desired port here.
 int port = 20080;
 
-// Enter a MAC address and IP address for your controller below.
-// The IP address will be dependent on your local network.
+//Enter a MAC address and IP address for your controller below.
+//The IP address will be dependent on your local network.
 byte mac[] = {
   0xA8, 0x61, 0x0A, 0xAE, 0x95, 0x5F };
 IPAddress ip(192, 168, 2, 177);
 
-// Running on Port int port.
+//Running on Port int port.
 EthernetServer server(port);
 
 bool alreadyConnected = false; //Sets the default condition of the connection.
@@ -105,7 +105,7 @@ void setup() {
     }
   }
 
-  // Check for an Ethernet Cable.
+  //Check for an Ethernet Cable.
   if (Ethernet.linkStatus() == LinkOFF) 
   {
     Serial.println("Ethernet cable is not connected.");
@@ -159,7 +159,7 @@ void loop() {
   }
 
   //This allows the display to scroll.
-  //To make the display scroll adjust
+  //To make the display scroll adjust:
   //scrollAllow to True
   //scrollAmount to the .lenght() of the string.
   //delayStart4 to time;
